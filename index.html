@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Spatial Quaranzine</title>
+  </head>
+
+  <body>
+    <div class="bodycontainer">
+
+      
+      <div id="nav">
+        <div class="logo skewhover skew-n15 z10"><img src="/assets/images/logo.svg" /></div>
+        <div id="nav-description" class="skewhover skew-15">
+          <img class="img" src="/assets/images/textbox.svg" />
+          <div class="text">
+            Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our present moment and near future, using spatial and architectural representations.
+
+Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught by
+Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.  
+          </div>
+        </div>
+
+        <div id="nav_arrows" class="skew-n15">
+          <div id="left_arrow" class="nav-arrow nav-border">&lt;</div>
+          <div id="current_info" class="nav-border">
+            <div class="title">House vs. Quarantine House</div>
+            <div class="authors">Cara DePippo</div>
+          </div>
+          <div id="right_arrow" class="nav-arrow nav-border">&gt;</div>
+        </div>
+
+        <div id="thumbnail_container">
+          <div class="thumbnail skewhover skew-15" v-for="record in records">
+            <img class="image" v-bind:src="record.fields.Screenshot[0].thumbnails.large.url" />
+            <div class="work_names">{{ record.fields['Names'] }}</div>
+            <div class="work_title">{{ record.fields['Title'] }}</div>
+            <div class="work_url">{{ record.fields['Url'] }}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="work_display">work_dsiplay</div>
+
+    </div>
+
+
+    <script>
+      var tableID = "appSF4u3aLqrtbzJ8";
+      var tableName = "Work";
+      var apikey = "keyoQpvlH7D3w9kIB"; //normally this should NEVER be exposed. However, this api key is to an account that has read-only access to publicly viewable airtables.
+      var tableview = "Grid%20view";
+      var apiURL = `https://api.airtable.com/v0/${tableID}/${tableName}?api_key=${apikey}&view=${tableview}`;
+
+      app = new Vue({
+        el: "#thumbnail_container",
+        data: {
+          records: null,
+          timer: null
+        },
+        created: function() {
+          this.fetchData();
+          this.timer = setInterval(this.fetchData, 30 * 1000);
+        },
+        beforeDestroy: function() {
+          clearInterval(this.timer);
+        },
+        methods: {
+          artworkClasses: function(record) {
+            return {
+              artwork_sold: record.fields["Is Sold"],
+              artwork_hasbid:
+                !record.fields["Is Sold"] &&
+                record.fields["Max Bidder Name"][0],
+              artwork_unbid:
+                !record.fields["Is Sold"] &&
+                !record.fields["Max Bidder Name"][0]
+            };
+          },
+          fetchData: function() {
+            var xhr = new XMLHttpRequest();
+            var self = this;
+            xhr.open("GET", apiURL);
+            xhr.onload = function() {
+              self.records = JSON.parse(xhr.responseText).records;
+              console.log("Fetched data.");
+              console.log(self.records);
+            };
+            xhr.send();
+          }
+        }
+      });
+
+      $(document).ready(() => {
+
+        $(".skewhover").hover(function() {
+          $(this).addClass("unskew");
+        }, function() {
+          $(this).removeClass("unskew");
+        });
+        console.log("ready")
+      });
+    </script>
+  </body>
+</html>
