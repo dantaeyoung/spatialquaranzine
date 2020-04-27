@@ -1,20 +1,23 @@
+$mainGradient: linear-gradient(209deg, rgba(255,255,255,1) 15%, rgba(150,241,255,1) 100%);
+
 body {
   font-family: 'Source Sans Pro', 'Helvetica', 'Arial', sans-serif;
-    margin: 0px;
-    padding: 0px;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
+
 .bodycontainer {
-  display:flex;
   align-items: center;
   border: 1px solid green;
+  display:flex;
 }
 
 #nav {
-  padding-top: 15px;
-  background: linear-gradient(209deg, rgba(255,255,255,1) 15%, rgba(150,241,255,1) 100%);
+  background: $mainGradient;
   height: 100vh;
   min-width: 400px;
+  padding-top: 15px;
   width: 40vw;
 }
 
@@ -34,7 +37,6 @@ div {
   transform: skew(-15deg, 0deg) rotate(-15deg) scale(0.85, 1);
 }
 
-
 .z10 {
   z-index: 10;
 }
@@ -43,15 +45,15 @@ div {
   transform: skew(0deg, 0deg) rotate(0deg) scale(1, 1) !important;
 }
 
-
 #nav-description {
-  display: relative;
-  width: 300px; height: 300px;
+  display: relative;height: 300px;
+  width: 300px;
 
   .img { position: absolute; }
+
   .text {
-    padding: 30px;
     font-size: 0.85em;
+    padding: 30px;
  }
 }
 
@@ -68,9 +70,9 @@ div {
   }
 
   .nav-arrow {
-    font-weight: bold;
     display: flex;
     flex-direction: column;
+    font-weight: bold;
     justify-content: center;
   }
 
@@ -82,28 +84,28 @@ div {
 
 }
 
-
 #thumbnail_container {
-
-  margin-top: 20px;
-  padding: 0px 20px;
-
   display: flex;
+  margin-top: 20px;
+  padding: 0 20px;
 
   .thumbnail {
+    border: 2px solid black;height: 100px;
+    width: 100px;
 
     &:hover {
       transform: skew(0deg, 0deg) rotate(0deg) scale(1, 1) !important;
     }
-    width: 100px; height: 100px;
 
-    border: 2px solid black;
-
-    .image { width: 100%; height: 100%; object-fit: cover; }
+    .image {height: 100%; object-fit: cover;  width: 100%; }
 
     .work_names, .work_title, .work_url { 
       display: none;
     }
   }
 
+}
+
+.mainSvg {
+  background: $mainGradient;
 }
