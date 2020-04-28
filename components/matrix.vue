@@ -3,10 +3,10 @@
         <svg class="mainSvg"
              xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink"
-             viewBox="0 0 1000 1500">
+             viewBox="0 0 1200 1500">
             <rect class="bounds"
-                  width="1000"
-                  height="1500"></rect>
+                  :width="width"
+                  :height="height"></rect>
             <theme-header v-for="theme in themes"
                           :theme="theme"
                           :key="theme"
@@ -14,18 +14,22 @@
                           :x="xPosForTheme(theme)" />
             <ellipse v-for="theme in themes"
                      :key="theme"
-                     :cx="xPosForTheme(theme)"
+                     :cx="xPosForTheme(theme)+60"
                      :cy="100"
-                     rx="10"
-                     ry="10"
-                     >
+                     rx="3"
+                     ry="3">
 
             </ellipse>
-            <thumb v-for="(work, key) in works"
+            <thumb v-for="(work, wk) in works"
                    :x="xPosForWork(work)"
-                   :y="200+110*key"
-                   :key="key"
+                   :y="200+110*wk"
+                   :key="`w-${wk}`"
                    :work="work"></thumb>
+            <student-label v-for="(student, k) in students"
+                           :key="`s-${k}`"
+                           :x="0"
+                           :y="200 + k * 25"
+                           :student="student.fields"></student-label>
         </svg>
     </div>
 </template>
@@ -34,29 +38,29 @@
 module.exports = {
     data() {
         return {
-            width: 1000,
+            width: 1200,
             height: 1500,
+            labelColWidth: 200,
             themes: ["Space", "Collaboration", "Time", "Agency", "??"]
         };
     },
     props: ["works", "students"],
     components: {
         thumb: httpVueLoader("./thumb.vue"),
-        "theme-header": httpVueLoader("./theme-header.vue")
+        "theme-header": httpVueLoader("./theme-header.vue"),
+        "student-label": httpVueLoader("./student-label.vue")
     },
     methods: {
         xPosForTheme(theme) {
             var themeIndex = this.themes.indexOf(theme);
-            console.log(theme);
-            console.log(themeIndex);
-            return this.width * (themeIndex / this.themes.length);
+            return this.labelColWidth + (this.width-this.labelColWidth) * (themeIndex / this.themes.length);
         },
         xPosForWork(work) {
             var theme =
                 (work.fields["Theme / Week"] &&
                     work.fields["Theme / Week"][0]) ||
                 "??";
-            return this.xPosForTheme(theme);
+            return this.xPosForTheme(theme)+60;
         }
     },
     computed: {

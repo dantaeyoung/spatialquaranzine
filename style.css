@@ -53,6 +53,10 @@ div {
           transform: skew(0deg, 0deg) rotate(0deg) scale(1, 1) !important;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 #nav-description {
   display: relative;
   height: 300px;

@@ -13,7 +13,7 @@
               width="100"
               height="100"
               class="thumb background skew-15"
-              :class="{'unskew': hovered}"
+              :class="skewClass"
               @mouseover="hovered = true"
               @mouseout="hovered = false" />
         <image v-if="smallThumb"
@@ -23,7 +23,7 @@
                height="100px"
                width="100px"
                class="thumb skew-15"
-               :class="{'unskew': hovered}"
+               :class="skewClass"
                @mouseover="hovered = true"
                @mouseout="hovered = false" />
         <rect x="-50"
@@ -31,9 +31,7 @@
               width="100"
               height="100"
               class="thumb border skew-15"
-              :class="{'unskew': hovered}"
-              @mouseover="hovered = true"
-              @mouseout="hovered = false" />
+              :class="skewClass" />
     </svg>
     <!-- <image v-if="smallThumb"
                :href="smallThumb"
@@ -67,6 +65,13 @@ module.exports = {
         transformClass() {
             return { transform: `translate(${this.x}px, ${this.y}px)` };
         },
+        skewClass() {
+            return {
+                unskew: this.hovered,
+                "scale-up": this.hovered,
+                clickable: this.hovered
+            };
+        },
         firstImage() {
             const images = this.work.fields["Images (PNG, JPG, GIF)"];
             return images ? images[0] : null;
@@ -80,6 +85,10 @@ module.exports = {
 };
 </script>
 <style lang="css" scoped>
+.scale-up {
+    transform: scale(1.5) !important;
+}
+
 .wrapper {
     transform: translate(300px, 300px);
 }
