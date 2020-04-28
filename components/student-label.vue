@@ -15,6 +15,7 @@ module.exports = {
 </script>
 <style scoped>
 .header {
+    cursor: pointer;
     font-size: 18px;
     text-anchor: end;
 }
