@@ -124,7 +124,6 @@ module.exports = {
             for (let theme of this.themes) {
                 themeDict[theme] = 0;
             }
-            console.log(themeDict);
             this.works.forEach(work => {
                 var workTheme = this.themeForWork(work);
                 const themeWorkCount = themeDict[workTheme];
