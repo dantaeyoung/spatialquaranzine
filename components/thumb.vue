@@ -7,7 +7,8 @@
          width="300"
          viewBox="-150 -150 300 300"
          :x="x-150"
-         :y="y-150">
+         :y="y-150"
+         :style="{opacity: opacityForScroll}">
         <rect x="-50"
               y="-50"
               width="100"
@@ -60,7 +61,7 @@ module.exports = {
             hovered: false
         };
     },
-    props: ["work", "x", "y"],
+    props: ["work", "x", "y", "scroll"],
     computed: {
         transformClass() {
             return { transform: `translate(${this.x}px, ${this.y}px)` };
@@ -80,6 +81,15 @@ module.exports = {
             return this.firstImage && this.firstImage.thumbnails
                 ? this.firstImage.thumbnails.large.url
                 : null;
+        },
+        opacityForScroll() {
+            let scroll = this.y;
+            const startFade = 200;
+            const endFade = 100;
+            scroll = Math.min(startFade, scroll);
+            scroll = Math.max(endFade, scroll);
+            scroll = (scroll - endFade) / (startFade - endFade); //remap to 1-0
+            return scroll;
         }
     }
 };

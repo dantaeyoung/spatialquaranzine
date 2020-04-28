@@ -16,5 +16,6 @@ module.exports = {
 <style scoped>
 .header {
     font-size: 20px;
+    text-anchor: end;
 }
 </style>
