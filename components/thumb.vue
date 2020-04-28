@@ -15,8 +15,8 @@
               height="100"
               class="thumb background skew-15"
               :class="skewClass"
-              @mouseover="hovered = true"
-              @mouseout="hovered = false" />
+              @mouseover="enterHover"
+              @mouseout="leaveHover" />
         <image v-if="smallThumb"
                :href="smallThumb"
                x="-50"
@@ -25,8 +25,8 @@
                width="100px"
                class="thumb skew-15"
                :class="skewClass"
-               @mouseover="hovered = true"
-               @mouseout="hovered = false" />
+               @mouseover="enterHover"
+               @mouseout="leaveHover" />
         <rect x="-50"
               y="-50"
               width="100"
@@ -61,7 +61,17 @@ module.exports = {
             hovered: false
         };
     },
-    props: ["work", "x", "y", "scroll"],
+    props: ["work", "x", "y", "scroll", "selectedstudent"],
+    methods: {
+        enterHover() {
+            this.hovered = true;
+            this.$emit('hover', this.work)
+        },
+        leaveHover() {
+            this.hovered = false;
+            this.$emit('hover', null)
+        }
+    },
     computed: {
         transformClass() {
             return { transform: `translate(${this.x}px, ${this.y}px)` };
@@ -89,12 +99,28 @@ module.exports = {
             scroll = Math.min(startFade, scroll);
             scroll = Math.max(endFade, scroll);
             scroll = (scroll - endFade) / (startFade - endFade); //remap to 1-0
+            if (this.selectedstudent) {
+                console.log(this.work.fields["Students"]);
+                if (
+                    this.work.fields["Students"].includes(
+                        this.selectedstudent.id
+                    )
+                ) {
+                    return 1.0;
+                } else {
+                    return 0.2 * scroll;
+                }
+            }
             return scroll;
         }
     }
 };
 </script>
 <style lang="css" scoped>
+svg {
+    transition: all 100ms;
+}
+
 .scale-up {
     transform: scale(1.5) !important;
 }

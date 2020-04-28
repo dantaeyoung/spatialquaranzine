@@ -8,17 +8,23 @@
             <rect class="bounds"
                   :width="width"
                   :height="height"></rect>
+            <student-label class="student-label"
+                           v-for="(student, k) in students"
+                           :key="`s-${k}`"
+                           :x="200"
+                           :y="200 + k * 25 - scrollY"
+                           :student="student.fields"
+                           @mouseover="hoveredStudent = student"
+                           @mouseout="hoveredStudent = null"
+                           :class="{fade: studentFade(student)}"></student-label>
             <thumb v-for="(work, wk) in works"
                    :x="xPosForWork(work)"
                    :y="yPosForWork(work)"
                    :key="`w-${wk}`"
                    :work="work"
-                   :scroll="scrollY"></thumb>
-            <student-label v-for="(student, k) in students"
-                           :key="`s-${k}`"
-                           :x="200"
-                           :y="200 + k * 25 - scrollY"
-                           :student="student.fields"></student-label>
+                   :scroll="scrollY"
+                   :selectedstudent="hoveredStudent"
+                   @hover="workHover"></thumb>
             <theme-header v-for="theme in themes"
                           :theme="theme"
                           :key="`t-${theme}`"
@@ -47,7 +53,9 @@ module.exports = {
             scrollY: 0,
             scrollX: 0,
             maxScrollX: 100,
-            maxScrollY: 1500
+            maxScrollY: 1500,
+            hoveredStudent: null,
+            hoveredWork: null
         };
     },
     props: ["works", "students"],
@@ -80,7 +88,7 @@ module.exports = {
             const offset = 200;
             const vSpacing = 110;
             const vIndex = this.yPositionsForWork[work.id] || 0;
-            return offset + vSpacing * vIndex - this.scrollY;
+            return offset + vSpacing * vIndex - this.scrollY * 0.3;
         },
         clamp(value, max, min) {
             return Math.min(Math.max(value, max), min);
@@ -90,6 +98,19 @@ module.exports = {
             this.scrollY = this.clamp(this.scrollY, 0, this.maxScrollY);
             this.scrollX += event.deltaX;
             event.preventDefault();
+        },
+        studentFade(student) {
+            if (this.hoveredStudent) {
+                return this.hoveredStudent.id != student.id;
+            } else if (this.hoveredWork) {
+                return !this.hoveredWork.fields["Students"].includes(
+                    student.id
+                );
+            }
+            return false;
+        },
+        workHover(work) {
+            this.hoveredWork = work;
         }
     },
     computed: {
@@ -117,6 +138,14 @@ module.exports = {
 </script>
 
 <style scoped>
+.student-label {
+    transition: all 100ms;
+}
+
+.fade {
+    opacity: 0.4;
+}
+
 .bounds {
     fill: none;
     stroke: black;
