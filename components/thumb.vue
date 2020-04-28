@@ -100,7 +100,6 @@ module.exports = {
             scroll = Math.max(endFade, scroll);
             scroll = (scroll - endFade) / (startFade - endFade); //remap to 1-0
             if (this.selectedstudent) {
-                console.log(this.work.fields["Students"]);
                 if (
                     this.work.fields["Students"].includes(
                         this.selectedstudent.id
