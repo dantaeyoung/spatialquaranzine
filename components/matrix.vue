@@ -138,7 +138,7 @@ module.exports = {
 
 <style scoped>
 .student-label {
-    transition: all 100ms;
+    transition: opacity 100ms;
 }
 
 .fade {
