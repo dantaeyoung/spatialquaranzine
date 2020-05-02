@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Spatial Quaranzine</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+
+    <script>
+        var tableID = "appSF4u3aLqrtbzJ8";
+        var apikey = "keyoQpvlH7D3w9kIB"; //normally this should NEVER be exposed. However, this api key is to an account that has read-only access to publicly viewable airtables.
+        var tableview = "Grid%20view";
+        var workApiUrl = `https://api.airtable.com/v0/${tableID}/Work?api_key=${apikey}&view=${tableview}`;
+        var studentsApiUrl = `https://api.airtable.com/v0/${tableID}/Students?api_key=${apikey}&view=${tableview}`;
+
+        const Matrix = httpVueLoader('components/matrix.vue')
+        const Bar = { template: '<div>blap</div>' }
+
+        // 3. Create the router instance and pass the `routes` option
+        const router = new VueRouter({
+            routes: [{
+                path: '/',
+                component: Matrix,
+                props: { works, students }
+            },
+            { path: '/bar', component: Bar }]
+        })
+
+        // 4. Create and mount the root instance.
+        // Make sure to inject the router with the router option to make the
+        // whole app router-aware.
+        const app = new Vue({
+            router,
+            el: "#app",
+            components: {
+                'matrix': httpVueLoader('components/matrix.vue')
+            },
+            data: {
+                works: null,
+                students: null,
+                timer: null
+            },
+            created: function () {
+                this.fetchData();
+
+            },
+            methods: {
+                fetchData: function () {
+                    var xhr = new XMLHttpRequest();
+                    var self = this;
+                    xhr.open("GET", workApiUrl);
+                    xhr.onload = function () {
+                        self.works = JSON.parse(xhr.responseText).records;
+                    };
+                    xhr.send();
+                    var xhr2 = new XMLHttpRequest();
+                    var self = this;
+                    xhr2.open("GET", studentsApiUrl);
+                    xhr2.onload = function () {
+                        self.students = JSON.parse(xhr2.responseText).records;
+                    };
+                    xhr2.send();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
