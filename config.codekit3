@@ -7,7 +7,7 @@
 		"uuidString": "1166EEBF-0AAB-4733-BCC8-895C38A91935"
 		}
 	],
-"creatorBuild": "32001",
+"creatorBuild": "32147",
 "files": {
 	"/.gitignore": {
 		"cB": 0,
@@ -15,6 +15,22 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/.gitignore",
+		"oF": 0
+		},
+	"/.newindex.html.swp": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/.newindex.html.swp",
+		"oF": 0
+		},
+	"/.style.scss.swp": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/.style.scss.swp",
 		"oF": 0
 		},
 	"/assets/images/logo.svg": {
@@ -47,12 +63,12 @@
 		"plM": 52780316221407,
 		"prP": 0
 		},
-	"/components/.thumbnailnav.vue.swp": {
+	"/components/.workdisplay.vue.swp": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
-		"oAP": "/components/.thumbnailnav.vue.swp",
+		"oAP": "/components/.workdisplay.vue.swp",
 		"oF": 0
 		},
 	"/components/matrix.vue": {
@@ -103,12 +119,12 @@
 		"oAP": "/components/thumbnailnav.vue",
 		"oF": 0
 		},
-	"/index.html": {
+	"/components/workdisplay.vue": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
-		"oAP": "/index.html",
+		"oAP": "/components/workdisplay.vue",
 		"oF": 0
 		},
 	"/main.html": {
@@ -211,14 +227,14 @@
 		"aP": 0,
 		"bl": 0,
 		"dP": 10,
-		"dS": 0,
+		"ec": 1,
 		"ft": 4,
 		"ma": 0,
 		"oA": 0,
 		"oAP": "/style.css",
 		"oF": 0,
 		"oS": 0,
-		"uL": 1
+		"sct": 1
 		}
 	},
 "hooks": [
@@ -2250,13 +2266,13 @@
 		"autoOutputPathReplace1": "sass",
 		"autoOutputPathReplace2": "css",
 		"autoOutputPathStyle": 0,
+		"compilerType": 1,
 		"createSourceMap": 0,
-		"debugStyle": 0,
 		"decimalPrecision": 10,
+		"emitCharset": 1,
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
+		"shouldRunBless": 0
 		},
 	"languageDefaultsSLIM": {
 		"autoOutputAction": 0,

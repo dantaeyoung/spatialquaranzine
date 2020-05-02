@@ -7,17 +7,18 @@
       rel="stylesheet"
       type="text/css"
     />
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <title>Spatial Quaranzine</title>
   </head>
 
   <body>
-    <div class="bodycontainer">
+    <div id="bodyContainer" class="bodycontainer">
 
       
-      <div id="nav">
+    <section id="nav">
         <div class="logo skewhover skew-n15 z10"><img src="/assets/images/logo.svg" /></div>
         <div id="nav-description" class="skewhover skew-15">
           <img class="img" src="/assets/images/textbox.svg" />
@@ -29,29 +30,13 @@ Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney
           </div>
         </div>
 
-        <div id="nav_arrows" class="skew-n15">
-          <div id="left_arrow" class="nav-arrow nav-border">&lt;</div>
-          <div id="current_info" class="nav-border">
-            <div class="title">House vs. Quarantine House</div>
-            <div class="authors">Cara DePippo</div>
-          </div>
-          <div id="right_arrow" class="nav-arrow nav-border">&gt;</div>
-        </div>
+      <thumbnailnav v-bind="{works, students}" v-on:thumbclicked="handleThumbClick"></thumbnailnav>
 
-        <div id="thumbnail_container">
-          <div class="thumbnail skewhover skew-15" v-for="record in records">
-            <img class="image" v-bind:src='record.fields["Images (PNG, JPG, GIF)"]' />
-            <div class="work_names">{{ record.fields['Names'] }}</div>
-            <div class="work_title">{{ record.fields['Title'] }}</div>
-            <div class="work_url">{{ record.fields['Url'] }}</div>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="work_display">work_dsiplay</div>
-
-    </div>
+    </section>
+    <section id="work_display">
+      <workdisplay v-bind="{works, students, currentwork}"></workdisplay>
+    </section>
+  </div>
 
 
     <script>
@@ -59,43 +44,46 @@ Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney
       var tableName = "Work";
       var apikey = "keyoQpvlH7D3w9kIB"; //normally this should NEVER be exposed. However, this api key is to an account that has read-only access to publicly viewable airtables.
       var tableview = "Grid%20view";
-      var apiURL = `https://api.airtable.com/v0/${tableID}/${tableName}?api_key=${apikey}&view=${tableview}`;
+      var workApiUrl = `https://api.airtable.com/v0/${tableID}/Work?api_key=${apikey}&view=${tableview}`;
+      var studentsApiUrl = `https://api.airtable.com/v0/${tableID}/Students?api_key=${apikey}&view=${tableview}`;
 
-      app = new Vue({
-        el: "#thumbnail_container",
+    window.app = new Vue({
+        el: "#bodyContainer",
+        components: {
+          'thumbnailnav': httpVueLoader('components/thumbnailnav.vue'),
+          'workdisplay': httpVueLoader('components/workdisplay.vue'),
+        },
         data: {
-          records: null,
-          timer: null
+          works: null,
+          students: null,
+          currentwork: null,
+          timer: null,
         },
         created: function() {
           this.fetchData();
-          this.timer = setInterval(this.fetchData, 30 * 1000);
-        },
-        beforeDestroy: function() {
-          clearInterval(this.timer);
+          // this.timer = setInterval(this.fetchData, 120 * 1000); 
         },
         methods: {
-          artworkClasses: function(record) {
-            return {
-              artwork_sold: record.fields["Is Sold"],
-              artwork_hasbid:
-                !record.fields["Is Sold"] &&
-                record.fields["Max Bidder Name"][0],
-              artwork_unbid:
-                !record.fields["Is Sold"] &&
-                !record.fields["Max Bidder Name"][0]
-            };
+          fetchData: function () {
+              var xhr = new XMLHttpRequest();
+              var self = this;
+              xhr.open("GET", workApiUrl);
+              xhr.onload = function () {
+                  self.works = JSON.parse(xhr.responseText).records;
+                console.log("works", self.works);
+              };
+              xhr.send();
+              var xhr2 = new XMLHttpRequest();
+              var self = this;
+              xhr2.open("GET", studentsApiUrl);
+              xhr2.onload = function () {
+                  self.students = JSON.parse(xhr2.responseText).records;
+              };
+              xhr2.send();
           },
-          fetchData: function() {
-            var xhr = new XMLHttpRequest();
-            var self = this;
-            xhr.open("GET", apiURL);
-            xhr.onload = function() {
-              self.records = JSON.parse(xhr.responseText).records;
-              console.log("Fetched data.");
-              console.log(self.records);
-            };
-            xhr.send();
+          handleThumbClick: function(eventID) {
+            console.log("this is newindex speaking; someone clicked", eventID);
+            this.currentwork = eventID; // this passes it down to workdisplay via props
           }
         }
       });

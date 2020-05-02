@@ -11,7 +11,7 @@
   </div>
 
   <div id="thumbnail_container">
-    <div class="thumbnail skewhover skew-15" v-for="(work, wk) in works" v-on:click="thumbClicked" :id="work.id" :class="thumbnailClasses(work)">
+    <div class="thumbnail skewhover skew-15" v-for="(work, wk) in works" v-on:click="thumbclicked" :id="work.id" :class="thumbnailClasses(work)">
       <!--<div class="work_title">{{ work.fields.Title }}</div>-->
       <div class="work_image"><img :src="smallThumb(work)" /></div>
     </div>
@@ -38,9 +38,9 @@ module.exports = {
           "isClicked" : work.id == this.clickedWorkID
         };
       },
-      thumbClicked(event) {
-        console.log(event.currentTarget.id);
+      thumbclicked(event) {
         this.clickedWorkID = event.currentTarget.id;
+        this.$emit('thumbclicked', event.currentTarget.id);
       },
       smallThumb(work) {
         try {
@@ -68,18 +68,21 @@ module.exports = {
   border: 2px solid black;
   height: 100px;
   width: 100px !important;
+  margin: 2px;
 }
 
 .thumbnail:hover {
     transform: skew(0deg, 0deg) rotate(0deg) scale(1, 1) !important;
-    border: 3px solid pink;
+    border: 3px solid #32A198;
+    margin: 4px;
   }
 
 .work_image {height: 100%; object-fit: cover;  width: 100%; }
 .work_image img {height: 100%; object-fit: cover;  width: 100%; }
 
 .isClicked {
-  border: 3px solid red;
+  margin: 0px;
+  border: 4px solid #2E8CCF;
   transform: skew(0deg, 0deg) rotate(0deg) scale(1, 1) !important;
 }
 
