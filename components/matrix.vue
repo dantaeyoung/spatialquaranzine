@@ -57,6 +57,8 @@
 module.exports = {
     data() {
         return {
+            works: [],
+            students: [],
             width: 1500,
             height: 1000,
             studentSpacing: 25,
@@ -75,13 +77,27 @@ module.exports = {
             xForStudent: 200
         };
     },
-    props: ["works", "students"],
     components: {
         thumb: httpVueLoader("./thumb.vue"),
         "theme-header": httpVueLoader("./theme-header.vue"),
         "student-label": httpVueLoader("./student-label.vue")
     },
     methods: {
+         fetchData: function() {
+            var xhr = new XMLHttpRequest();
+            var self = this;
+            xhr.open("GET", workApiUrl);
+            xhr.onload = function() {
+                self.works = JSON.parse(xhr.responseText).records;
+            };
+            xhr.send();
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", studentsApiUrl);
+            xhr2.onload = function() {
+                self.students = JSON.parse(xhr2.responseText).records;
+            };
+            xhr2.send();
+        },
         xPosForTheme(theme) {
             var themeIndex = this.themes.indexOf(theme);
             return (
@@ -178,9 +194,7 @@ module.exports = {
                 }
                 // remove this work from the list remaining
                 worksToSort = worksToSort.filter(w => w.id != work.id);
-                if (work.id == "rec6JiLeophyM8M6b") {
-                    console.log(worksToSort.map(w => w.fields.Title));
-                }
+                
                 // add this work to the list
                 worksOrdered.push(work);
 
@@ -198,7 +212,8 @@ module.exports = {
                 if (
                     !studentsToSort.length ||
                     !student ||
-                    (!student.fields.Work && !this.includeStudentsWithNoWork)
+                    (!student.fields.Work && !this.includeStudentsWithNoWork) ||
+                    studentsOrdered.includes(student)
                 ) {
                     return;
                 }
@@ -268,6 +283,12 @@ module.exports = {
         students() {
             this.processStudentsAndWorks();
         }
+    },
+    created() {
+        this.fetchData();
+    },
+    mounted() {
+        this.processStudentsAndWorks();
     }
 };
 </script>

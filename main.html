@@ -25,16 +25,18 @@
         var studentsApiUrl = `https://api.airtable.com/v0/${tableID}/Students?api_key=${apikey}&view=${tableview}`;
 
         const Matrix = httpVueLoader('components/matrix.vue')
-        const Bar = { template: '<div>blap</div>' }
-
+        const Student = httpVueLoader('components/student-details.vue')
+      
         // 3. Create the router instance and pass the `routes` option
         const router = new VueRouter({
             routes: [{
                 path: '/',
                 component: Matrix,
-                props: { works, students }
             },
-            { path: '/bar', component: Bar }]
+            {
+                path: '/student/:id',
+                component: Student,
+            }]
         })
 
         // 4. Create and mount the root instance.
@@ -47,31 +49,7 @@
                 'matrix': httpVueLoader('components/matrix.vue')
             },
             data: {
-                works: null,
-                students: null,
-                timer: null
-            },
-            created: function () {
-                this.fetchData();
-
-            },
-            methods: {
-                fetchData: function () {
-                    var xhr = new XMLHttpRequest();
-                    var self = this;
-                    xhr.open("GET", workApiUrl);
-                    xhr.onload = function () {
-                        self.works = JSON.parse(xhr.responseText).records;
-                    };
-                    xhr.send();
-                    var xhr2 = new XMLHttpRequest();
-                    var self = this;
-                    xhr2.open("GET", studentsApiUrl);
-                    xhr2.onload = function () {
-                        self.students = JSON.parse(xhr2.responseText).records;
-                    };
-                    xhr2.send();
-                }
+                store
             }
         });
     </script>
