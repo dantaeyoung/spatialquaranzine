@@ -65,11 +65,11 @@ module.exports = {
     methods: {
         enterHover() {
             this.hovered = true;
-            this.$emit('hover', this.work)
+            this.$emit("hover", this.work);
         },
         leaveHover() {
             this.hovered = false;
-            this.$emit('hover', null)
+            this.$emit("hover", null);
         }
     },
     computed: {
@@ -109,6 +109,8 @@ module.exports = {
                 } else {
                     return 0.2 * scroll;
                 }
+            } else if (this.hovered) {
+                return 1.0;
             }
             return scroll;
         }

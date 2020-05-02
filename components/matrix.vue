@@ -11,12 +11,22 @@
             <student-label class="student-label"
                            v-for="(student, k) in studentsSorted"
                            :key="`s-${k}`"
-                           :x="200"
-                           :y="200 + k * studentSpacing - scrollY * studentScrollMultiplier"
+                           :x="xForStudent"
+                           :y="yForStudent(k)"
                            :student="student.fields"
                            @mouseover="hoveredStudent = student"
                            @mouseout="hoveredStudent = null"
                            :class="{fade: studentFade(student)}"></student-label>
+            <g v-for="(student, k) in studentsSorted"
+               :key="`st-${k}`">
+                <path v-for="({workid, path}, key) in pathsForStudent(student, k)"
+                      :class="{fade: pathFade(student, workid)}"
+                      :key="`path-${key}`"
+                      :d="path"
+                      stroke="black"
+                      fill="transparent" />
+
+            </g>
             <thumb v-for="(work, wk) in worksSorted"
                    :x="xPosForWork(work)"
                    :y="yPosForWork(work)"
@@ -50,7 +60,7 @@ module.exports = {
             height: 1000,
             studentSpacing: 25,
             workSpacing: 110,
-            labelColWidth: 200,
+            labelColWidth: 150,
             themes: ["Space", "Collaboration", "Time", "Agency", "??"],
             scrollY: 0,
             scrollX: 0,
@@ -60,7 +70,8 @@ module.exports = {
             studentsSorted: [],
             worksSorted: [],
             tallestColumn: 0,
-            includeStudentsWithNoWork: false
+            includeStudentsWithNoWork: false,
+            xForStudent: 200
         };
     },
     props: ["works", "students"],
@@ -73,7 +84,8 @@ module.exports = {
         xPosForTheme(theme) {
             var themeIndex = this.themes.indexOf(theme);
             return (
-                this.labelColWidth +
+                this.xForStudent +
+                100 +
                 (this.width - this.labelColWidth) *
                     (themeIndex / this.themes.length)
             );
@@ -114,8 +126,38 @@ module.exports = {
             }
             return false;
         },
+        pathFade(student, workid) {
+            if (this.hoveredStudent) {
+                return this.hoveredStudent.id != student.id;
+            } else if (this.hoveredWork) {
+                return this.hoveredWork.id != workid;
+            }
+            return true;
+        },
         workHover(work) {
             this.hoveredWork = work;
+        },
+        pathsForStudent(student, k) {
+            const xForStudent = this.xForStudent + 5;
+            const yForStudent = this.yForStudent(k);
+            const x2 = xForStudent + 100;
+            return student.fields["Work"].map(workid => {
+                const work = this.worksSorted.filter(w => w.id == workid)[0];
+                const xForWork = this.xPosForWork(work);
+                const yForWork = this.yPosForWork(work);
+                const x3 = xForWork - 100;
+                return {
+                    workid: workid,
+                    path: `M ${xForStudent} ${yForStudent} C ${x2} ${yForStudent}, ${x3} ${yForWork}, ${xForWork} ${yForWork}`
+                };
+            });
+        },
+        yForStudent(i) {
+            return (
+                200 +
+                i * this.studentSpacing -
+                this.scrollY * this.studentScrollMultiplier
+            );
         },
         processStudentsAndWorks() {
             if (!this.students || !this.works) {
@@ -237,6 +279,10 @@ module.exports = {
 <style scoped>
 .student-label {
     transition: opacity 100ms;
+}
+
+path.fade {
+    opacity: 0.1;
 }
 
 .fade {
