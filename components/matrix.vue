@@ -34,6 +34,7 @@
                    :work="work"
                    :scroll="scrollY"
                    :selectedstudent="hoveredStudent"
+                   :hoveredWork="hoveredWork"
                    @hover="workHover"></thumb>
             <theme-header v-for="theme in themes"
                           :theme="theme"
@@ -61,7 +62,7 @@ module.exports = {
             studentSpacing: 25,
             workSpacing: 110,
             labelColWidth: 150,
-            themes: ["Space", "Collaboration", "Time", "Agency", "??"],
+            themes: ["Space", "Collaboration", "Time", "Agency"],
             scrollY: 0,
             scrollX: 0,
             maxScrollX: 100,
@@ -91,11 +92,10 @@ module.exports = {
             );
         },
         themeForWork(work) {
-            return (
-                (work.fields["Theme / Week"] &&
-                    work.fields["Theme / Week"][0]) ||
-                "??"
-            );
+            return this.themesForWork(work)[0] || "??";
+        },
+        themesForWork(work) {
+            return work.fields["Theme / Week"] && work.fields["Theme / Week"];
         },
         xPosForWork(work) {
             var theme = this.themeForWork(work);
@@ -168,10 +168,6 @@ module.exports = {
             const studentsOrdered = [];
             const worksOrdered = [];
             const processWork = work => {
-                console.log(`processing work ${work.fields.Title}`);
-                if (work.id == "rec6JiLeophyM8M6b") {
-                    console.log(worksToSort.map(w => w.fields.Title));
-                }
                 //exit if we've run out of works
                 if (
                     !worksToSort.length ||
@@ -255,10 +251,10 @@ module.exports = {
             return this.tallestColumn * this.workSpacing;
         },
         maxScrollY() {
-            return this.maxHeightWorks - window.innerHeight + 400;
+            return this.maxHeightWorks - this.height + 400;
         },
         studentScrollMultiplier() {
-            var winHeight = window.innerHeight - 400;
+            var winHeight = this.height - 400;
             return (
                 (this.maxHeightStudents - winHeight) /
                 (this.maxHeightWorks - winHeight)
