@@ -3,7 +3,7 @@
         <svg class="mainSvg"
              xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink"
-             viewBox="0 0 1500 1500"
+             viewBox="0 0 1500 1200"
              @mousewheel="scrollHandle">
             <rect class="bounds"
                   :width="width"
@@ -59,7 +59,7 @@ module.exports = {
     data() {
         return {
             width: 1500,
-            height: 1500,
+            height: 1200,
             studentSpacing: 25,
             workSpacing: 110,
             labelColWidth: 150,
@@ -118,6 +118,7 @@ module.exports = {
             return this.themesForWork(work)[0] || "??";
         },
         themesForWork(work) {
+            if(!work) return []
             return work.fields["Theme / Week"] && work.fields["Theme / Week"];
         },
         xPosForWork(work) {
@@ -127,7 +128,7 @@ module.exports = {
         yPosForWork(work) {
             const offset = 200;
             const vSpacing = this.workSpacing;
-            const vIndex = this.yPositionsForWork[work.id] || 0;
+            const vIndex = this.yPositionsForWork && this.yPositionsForWork[work.id] || 0;
             return offset + vSpacing * vIndex - this.scrollY;
         },
         clamp(value, max, min) {
@@ -338,6 +339,7 @@ path.fade {
 
 .mainSvg {
     height: 100%;
+    position: absolute;
     width: 100%;
 }
 </style>

@@ -1,0 +1,142 @@
+<template>
+    <div class="work-details">
+        <div class="scrollContainer">
+            <div v-if="youtube" class="imageWrapper">
+                <iframe class="video-embed"
+                        :src="youtube"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </div>
+            <div v-for="(image, key) in images"
+                 :key="key"
+                 class="imageWrapper">
+                <img :src="image" />
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <div id="nav_arrows"
+                     class="skew-n15">
+                    <div id="left_arrow"
+                         class="nav-arrow nav-border">&lt;</div>
+                    <div id="current_info"
+                         class="nav-border">
+                        <div class="title">{{title}}</div>
+                        <div class="authors">
+                            <span v-for="student in authors"
+                                  :key="student.id"
+                                  @click="goToStudent(student)">
+                                {{student.fields['Name']}}</span></div>
+                    </div>
+                    <div id="right_arrow"
+                         class="nav-arrow nav-border">&gt;</div>
+                </div>
+            </div>
+            <div>
+                <p>
+                    {{work && work['Description']}}
+                </p>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+module.exports = {
+    data() {
+        return {};
+    },
+    computed: {
+        work() {
+            if (!this.works || !this.works.length) {
+                return null;
+            }
+            return this.works.filter(s => s.id == this.$route.params.id)[0]
+                .fields;
+        },
+        authors() {
+            return this.students.filter(
+                s =>
+                    s.fields["Work"] &&
+                    s.fields["Work"].includes(this.$route.params.id)
+            );
+        },
+        title() {
+            return this.work && this.work["Title"];
+        },
+        students() {
+            return this.$store.state.students;
+        },
+        works() {
+            return this.$store.state.works;
+        },
+        images() {
+            return (
+                this.work && this.work["Images (PNG, JPG, GIF)"].map(i => i.url)
+            );
+        },
+        youtube() {
+            if (this.work && this.work["Public URL / Video"]) {
+                let url = this.work["Public URL / Video"];
+                if (url.includes("youtu")) {
+                    url = url.replace("https://www.youtube.com/watch?v=", "");
+                    url = url.replace("https://youtu.be/", "");
+                    if (url.includes("&")) {
+                        url = url.split("&")[0];
+                    }
+                    return `https://www.youtube.com/embed/${url}`;
+                }
+            }
+        }
+    },
+    methods: {
+        goToStudent(student) {
+            this.$router.push({ name: "student", params: { id: student.id } });
+        }
+    },
+    created() {
+        this.$store.dispatch("fetch");
+    }
+};
+</script>
+<style scoped>
+.imageWrapper {
+    margin: 10px;
+}
+
+.scrollContainer {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.work-details {
+    display: grid;
+    grid-template-rows: 80% 20%;
+    height: 100vh;
+}
+
+#nav_arrows {
+    max-width: 600px;
+    min-width: 400px;
+}
+
+p {
+    width: 400px;
+}
+
+img {
+    margin: auto;
+    max-height: 500px;
+    width: auto;
+}
+
+.video-embed {
+    height: 500px;
+    width: 100%;
+}
+
+.footer {
+    display: flex;
+}
+</style>
