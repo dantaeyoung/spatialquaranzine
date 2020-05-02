@@ -16,7 +16,7 @@
 
 <body>
     <div class="bodycontainer" id="app">
-        <div id="nav">
+        <div id="nav" :class="{indexView}">
             <div class="logo skewhover skew-n15 z10">
                 <img src="/assets/images/logo.svg" /></div>
             <div id="nav-description" class="skewhover skew-15">
@@ -30,22 +30,9 @@
                     Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
                 </div>
             </div>
-            <div id="nav_arrows" class="skew-n15">
-                <div id="left_arrow" class="nav-arrow nav-border">&lt;</div>
-                <div id="current_info" class="nav-border">
-                    <div class="title">House vs. Quarantine House</div>
-                    <div class="authors">Cara DePippo</div>
-                </div>
-                <div id="right_arrow" class="nav-arrow nav-border">&gt;</div>
-            </div>
-
+            <router-link to="/" >index</router-link>
             <div id="thumbnail_container">
-                <div class="thumbnail skewhover skew-15" v-for="record in works">
-                    <img class="image" v-bind:src="record.fields.Screenshot[0].thumbnails.large.url" />
-                    <div class="work_names">{{ record.fields['Names'] }}</div>
-                    <div class="work_title">{{ record.fields['Title'] }}</div>
-                    <div class="work_url">{{ record.fields['Url'] }}</div>
-                </div>
+                <thumb v-for="work in works" :work="work" />
             </div>
 
         </div>
@@ -65,6 +52,8 @@
 
         const Matrix = httpVueLoader('components/matrix.vue')
         const Student = httpVueLoader('components/student-details.vue')
+        const Work = httpVueLoader('components/work-details.vue')
+        const Thumb = httpVueLoader('components/work-thumb.vue')
 
         // 3. Create the router instance and pass the `routes` option
         const router = new VueRouter({
@@ -77,6 +66,11 @@
                 name: 'student',
                 path: '/student/:id',
                 component: Student,
+            },
+            {
+                name: 'work',
+                path: '/work/:id',
+                component: Work,
             }]
         })
 
@@ -135,10 +129,13 @@
             router,
             store,
             components: {
-                'matrix': httpVueLoader('components/matrix.vue')
+                'thumb': Thumb
             },
             computed: {
-                ...Vuex.mapState(['students', 'works'])
+                ...Vuex.mapState(['students', 'works']),
+                indexView() {
+                    return this.$route.name == 'matrix'
+                }
             },
             created() {
                 this.$store.dispatch('fetch')

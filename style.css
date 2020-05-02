@@ -2,6 +2,7 @@ body {
   font-family: 'Source Sans Pro', 'Helvetica', 'Arial', sans-serif;
   height: 100%;
   margin: 0;
+  overflow: hidden;
   padding: 0;
 }
 
@@ -12,6 +13,11 @@ body {
   display: flex;
 }
 
+h1 {
+  font-size: 3em;
+  text-transform: uppercase;
+}
+
 .wrapper {
   position: relative;
 }
@@ -19,8 +25,18 @@ body {
 #nav {
   height: 100vh;
   min-width: 400px;
+  overflow: hidden;
   padding-top: 15px;
   width: 40vw;
+}
+
+#nav.indexView {
+  width: 25vw;
+}
+
+#nav.indexView #thumbnail_container .thumbnail {
+  height: 80px;
+  width: 80px;
 }
 
 #work_display {
@@ -110,16 +126,23 @@ div {
   padding: 4px 2px;
 }
 
+.title {
+  font-weight: bold;
+}
+
 #thumbnail_container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin-top: 20px;
   padding: 0 20px;
 }
 
 #thumbnail_container .thumbnail {
   border: 2px solid black;
+  cursor: pointer;
   height: 100px;
   width: 100px;
 }
