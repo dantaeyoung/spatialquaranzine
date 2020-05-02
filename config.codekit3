@@ -17,12 +17,20 @@
 		"oAP": "/.gitignore",
 		"oF": 0
 		},
-	"/.index.html.swp": {
+	"/.newindex.html.swp": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
-		"oAP": "/.index.html.swp",
+		"oAP": "/.newindex.html.swp",
+		"oF": 0
+		},
+	"/.style.scss.swp": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/.style.scss.swp",
 		"oF": 0
 		},
 	"/assets/images/logo.svg": {
@@ -55,6 +63,14 @@
 		"plM": 52780316221407,
 		"prP": 0
 		},
+	"/components/.thumbnailnav.vue.swp": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/components/.thumbnailnav.vue.swp",
+		"oF": 0
+		},
 	"/components/matrix.vue": {
 		"cB": 0,
 		"ft": 8192,
@@ -85,6 +101,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/components/thumb.vue",
+		"oF": 0
+		},
+	"/components/thumbnailnav.vue": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/components/thumbnailnav.vue",
 		"oF": 0
 		},
 	"/index.html": {
@@ -155,6 +179,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/Mockups/~mockup-1~gn5(2s.idlk",
+		"oF": 0
+		},
+	"/newindex.html": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/newindex.html",
 		"oF": 0
 		},
 	"/style.css": {
