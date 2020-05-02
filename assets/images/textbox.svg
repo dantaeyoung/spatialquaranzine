@@ -1,1 +1,236 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 259.1 233.35"><defs><style>.cls-1{fill:#fff;}.cls-1,.cls-2,.cls-3{stroke:#231f20;}.cls-2,.cls-3{fill:none;}.cls-3{stroke-width:0.62px;}</style></defs><title>spatial_quaranzine_logos</title><path class="cls-1" d="M244.32,220.13H16V14H244.32ZM257,231.58V2.5H3.34V231.58H257Z"/><line class="cls-2" x1="257.41" y1="30.62" x2="244.73" y2="30.62"/><line class="cls-2" x1="16.01" y1="30.62" x2="3.33" y2="30.62"/><line class="cls-2" x1="257.41" y1="135.87" x2="244.73" y2="135.87"/><line class="cls-2" x1="16.01" y1="135.87" x2="3.33" y2="135.87"/><line class="cls-2" x1="257.29" y1="95.39" x2="244.6" y2="95.39"/><line class="cls-2" x1="15.89" y1="95.39" x2="3.21" y2="95.39"/><line class="cls-3" x1="257.29" y1="200.64" x2="244.6" y2="200.64"/><line class="cls-2" x1="15.89" y1="200.64" x2="3.21" y2="200.64"/><rect class="cls-3" x="248.64" y="30.62" width="4.86" height="4.86"/><rect class="cls-3" x="7.24" y="30.62" width="4.86" height="4.86"/><rect class="cls-3" x="248.64" y="135.87" width="4.86" height="4.86"/><rect class="cls-3" x="7.24" y="135.87" width="4.86" height="4.86"/><rect class="cls-3" x="248.64" y="90.54" width="4.86" height="4.86"/><rect class="cls-3" x="7.24" y="90.54" width="4.86" height="4.86"/><rect class="cls-3" x="248.64" y="195.79" width="4.86" height="4.86"/><rect class="cls-3" x="7.24" y="195.79" width="4.86" height="4.86"/><line class="cls-3" x1="252.69" y1="195.38" x2="252.69" y2="141.14"/><line class="cls-3" x1="11.29" y1="195.38" x2="11.29" y2="141.14"/><line class="cls-3" x1="249.45" y1="195.38" x2="249.45" y2="141.14"/><line class="cls-3" x1="8.05" y1="195.38" x2="8.05" y2="141.14"/><line class="cls-3" x1="252.69" y1="90.13" x2="252.69" y2="35.89"/><line class="cls-3" x1="11.29" y1="90.13" x2="11.29" y2="35.89"/><line class="cls-3" x1="249.45" y1="90.13" x2="249.45" y2="35.89"/><line class="cls-3" x1="8.05" y1="90.13" x2="8.05" y2="35.89"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0beta1 (76ce730, 2019-10-19)"
+   sodipodi:docname="textbox.svg"
+   version="1.1"
+   viewBox="0 0 259.1 233.35"
+   data-name="Layer 1"
+   id="Layer_1">
+  <metadata
+     id="metadata889">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>spatial_quaranzine_logos</dc:title>
+        <dc:title>spatial_quaranzine_logos</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:current-layer="Layer_1"
+     inkscape:window-maximized="0"
+     inkscape:window-y="23"
+     inkscape:window-x="0"
+     inkscape:cy="253.79016"
+     inkscape:cx="198.75821"
+     inkscape:zoom="1.3564148"
+     showgrid="false"
+     id="namedview887"
+     inkscape:window-height="1209"
+     inkscape:window-width="1600"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     inkscape:document-rotation="0"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <defs
+     id="defs832">
+    <style
+       id="style830">.cls-1{fill:#fff;}.cls-1,.cls-2,.cls-3{stroke:#231f20;}.cls-2,.cls-3{fill:none;}.cls-3{stroke-width:0.62px;}</style>
+  </defs>
+  <title
+     id="title834">spatial_quaranzine_logos</title>
+  <rect
+     y="2.5"
+     x="3.3399999"
+     height="229.08"
+     width="253.66"
+     id="rect891"
+     style="fill:#ffffff;stroke:none;stroke-width:0.725669;stroke-dasharray:2.17701, 0.72566900000000001;stroke-dashoffset:0.145134;fill-opacity:0.72064775" />
+  <path
+     id="path836"
+     d="M244.32,220.13H16V14H244.32ZM257,231.58V2.5H3.34V231.58H257Z"
+     class="cls-1" />
+  <line
+     id="line838"
+     y2="30.62"
+     x2="244.73"
+     y1="30.62"
+     x1="257.41"
+     class="cls-2" />
+  <line
+     id="line840"
+     y2="30.62"
+     x2="3.33"
+     y1="30.62"
+     x1="16.01"
+     class="cls-2" />
+  <line
+     id="line842"
+     y2="135.87"
+     x2="244.73"
+     y1="135.87"
+     x1="257.41"
+     class="cls-2" />
+  <line
+     id="line844"
+     y2="135.87"
+     x2="3.33"
+     y1="135.87"
+     x1="16.01"
+     class="cls-2" />
+  <line
+     id="line846"
+     y2="95.39"
+     x2="244.6"
+     y1="95.39"
+     x1="257.29"
+     class="cls-2" />
+  <line
+     id="line848"
+     y2="95.39"
+     x2="3.21"
+     y1="95.39"
+     x1="15.89"
+     class="cls-2" />
+  <line
+     id="line850"
+     y2="200.64"
+     x2="244.6"
+     y1="200.64"
+     x1="257.29"
+     class="cls-3" />
+  <line
+     id="line852"
+     y2="200.64"
+     x2="3.21"
+     y1="200.64"
+     x1="15.89"
+     class="cls-2" />
+  <rect
+     id="rect854"
+     height="4.86"
+     width="4.86"
+     y="30.62"
+     x="248.64"
+     class="cls-3" />
+  <rect
+     id="rect856"
+     height="4.86"
+     width="4.86"
+     y="30.62"
+     x="7.24"
+     class="cls-3" />
+  <rect
+     id="rect858"
+     height="4.86"
+     width="4.86"
+     y="135.87"
+     x="248.64"
+     class="cls-3" />
+  <rect
+     id="rect860"
+     height="4.86"
+     width="4.86"
+     y="135.87"
+     x="7.24"
+     class="cls-3" />
+  <rect
+     id="rect862"
+     height="4.86"
+     width="4.86"
+     y="90.54"
+     x="248.64"
+     class="cls-3" />
+  <rect
+     id="rect864"
+     height="4.86"
+     width="4.86"
+     y="90.54"
+     x="7.24"
+     class="cls-3" />
+  <rect
+     id="rect866"
+     height="4.86"
+     width="4.86"
+     y="195.79"
+     x="248.64"
+     class="cls-3" />
+  <rect
+     id="rect868"
+     height="4.86"
+     width="4.86"
+     y="195.79"
+     x="7.24"
+     class="cls-3" />
+  <line
+     id="line870"
+     y2="141.14"
+     x2="252.69"
+     y1="195.38"
+     x1="252.69"
+     class="cls-3" />
+  <line
+     id="line872"
+     y2="141.14"
+     x2="11.29"
+     y1="195.38"
+     x1="11.29"
+     class="cls-3" />
+  <line
+     id="line874"
+     y2="141.14"
+     x2="249.45"
+     y1="195.38"
+     x1="249.45"
+     class="cls-3" />
+  <line
+     id="line876"
+     y2="141.14"
+     x2="8.05"
+     y1="195.38"
+     x1="8.05"
+     class="cls-3" />
+  <line
+     id="line878"
+     y2="35.89"
+     x2="252.69"
+     y1="90.13"
+     x1="252.69"
+     class="cls-3" />
+  <line
+     id="line880"
+     y2="35.89"
+     x2="11.29"
+     y1="90.13"
+     x1="11.29"
+     class="cls-3" />
+  <line
+     id="line882"
+     y2="35.89"
+     x2="249.45"
+     y1="90.13"
+     x1="249.45"
+     class="cls-3" />
+  <line
+     id="line884"
+     y2="35.89"
+     x2="8.05"
+     y1="90.13"
+     x1="8.05"
+     class="cls-3" />
+</svg>

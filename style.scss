@@ -8,13 +8,18 @@ body {
 }
 
 .bodycontainer {
-  align-items: center;
-  border: 1px solid green;
+  background: $mainGradient;
+  // align-items: center;
+  // border: 1px solid green;
   display:flex;
 }
 
+.wrapper {
+  position: relative;
+}
+
 #nav {
-  background: $mainGradient;
+  // background: $mainGradient;
   height: 100vh;
   min-width: 400px;
   padding-top: 15px;
@@ -53,7 +58,9 @@ div {
   display: relative;height: 300px;
   width: 300px;
 
-  .img { position: absolute; }
+  .img {
+      position: absolute;  z-index: -1;
+      }
 
   .text {
     font-size: 0.85em;
@@ -108,8 +115,4 @@ div {
     }
   }
 
-}
-
-.mainSvg {
-  background: $mainGradient;
 }

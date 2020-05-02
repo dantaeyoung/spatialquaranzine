@@ -3,7 +3,7 @@
         <svg class="mainSvg"
              xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink"
-             viewBox="0 0 1500 1000"
+             viewBox="0 0 1500 1500"
              @mousewheel="scrollHandle">
             <rect class="bounds"
                   :width="width"
@@ -16,6 +16,7 @@
                            :student="student.fields"
                            @mouseover="hoveredStudent = student"
                            @mouseout="hoveredStudent = null"
+                           @click="studentClick(student)"
                            :class="{fade: studentFade(student)}"></student-label>
             <g v-for="(student, k) in studentsSorted"
                :key="`st-${k}`">
@@ -57,10 +58,8 @@
 module.exports = {
     data() {
         return {
-            works: [],
-            students: [],
             width: 1500,
-            height: 1000,
+            height: 1500,
             studentSpacing: 25,
             workSpacing: 110,
             labelColWidth: 150,
@@ -83,18 +82,26 @@ module.exports = {
         "student-label": httpVueLoader("./student-label.vue")
     },
     methods: {
-         fetchData: function() {
+        fetchData: function() {
             var xhr = new XMLHttpRequest();
             var self = this;
             xhr.open("GET", workApiUrl);
             xhr.onload = function() {
-                self.works = JSON.parse(xhr.responseText).records;
+                this.$store.commit(
+                    "setWorks",
+                    JSON.parse(xhr.responseText).records
+                );
+                self.works = this.$store.state.works;
             };
             xhr.send();
             var xhr2 = new XMLHttpRequest();
             xhr2.open("GET", studentsApiUrl);
             xhr2.onload = function() {
-                self.students = JSON.parse(xhr2.responseText).records;
+                this.$store.commit(
+                    "setStudents",
+                    JSON.parse(xhr2.responseText).records
+                );
+                self.students = this.$store.state.students;
             };
             xhr2.send();
         },
@@ -175,6 +182,10 @@ module.exports = {
                 this.scrollY * this.studentScrollMultiplier
             );
         },
+        studentClick(student) {
+            console.log("poosh");
+            this.$router.push({ name: "student", params: { id: student.id } });
+        },
         processStudentsAndWorks() {
             if (!this.students || !this.works) {
                 return;
@@ -194,7 +205,7 @@ module.exports = {
                 }
                 // remove this work from the list remaining
                 worksToSort = worksToSort.filter(w => w.id != work.id);
-                
+
                 // add this work to the list
                 worksOrdered.push(work);
 
@@ -238,6 +249,12 @@ module.exports = {
         }
     },
     computed: {
+        students() {
+            return this.$store.state.students;
+        },
+        works() {
+            return this.$store.state.works;
+        },
         viewbox() {
             return `0 0 ${this.width} ${this.height}`;
         },
@@ -285,7 +302,7 @@ module.exports = {
         }
     },
     created() {
-        this.fetchData();
+        this.$store.dispatch("fetch");
     },
     mounted() {
         this.processStudentsAndWorks();
@@ -315,7 +332,7 @@ path.fade {
 
 .wrapper {
     height: 100%;
-    position: absolute;
+    position: relative;
     width: 100%;
 }
 
