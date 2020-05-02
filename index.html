@@ -40,7 +40,7 @@ Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney
 
         <div id="thumbnail_container">
           <div class="thumbnail skewhover skew-15" v-for="record in records">
-            <img class="image" v-bind:src="record.fields.Screenshot[0].thumbnails.large.url" />
+            <img class="image" v-bind:src='record.fields["Images (PNG, JPG, GIF)"]' />
             <div class="work_names">{{ record.fields['Names'] }}</div>
             <div class="work_title">{{ record.fields['Title'] }}</div>
             <div class="work_url">{{ record.fields['Url'] }}</div>
