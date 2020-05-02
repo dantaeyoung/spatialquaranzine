@@ -1,10 +1,15 @@
 <template>
     <div>
         <h1>{{ name }}</h1>
+        <thumb v-for="(work, k) in worksForStudent"
+               :key="k" :work="work" />
     </div>
 </template>
 <script>
 module.exports = {
+    components: {
+        thumb: httpVueLoader("./work-thumb.vue")
+    },
     data() {
         return {};
     },
@@ -24,6 +29,11 @@ module.exports = {
         },
         works() {
             return this.$store.state.works;
+        },
+        worksForStudent() {
+            return this.works.filter(w =>
+                w.fields["Students"].includes(this.$route.params.id)
+            );
         }
     },
     created() {

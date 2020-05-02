@@ -80,3 +80,8 @@ module.exports = {
     }
 };
 </script>
+<style scoped>
+.thumbnail {
+    cursor: pointer;
+}
+</style>
