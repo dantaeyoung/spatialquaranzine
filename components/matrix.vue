@@ -3,27 +3,39 @@
         <svg class="mainSvg"
              xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink"
-             viewBox="0 0 1500 1000"
+             viewBox="0 0 1500 1500"
              @mousewheel="scrollHandle">
             <rect class="bounds"
                   :width="width"
                   :height="height"></rect>
             <student-label class="student-label"
-                           v-for="(student, k) in students"
+                           v-for="(student, k) in studentsSorted"
                            :key="`s-${k}`"
-                           :x="200"
-                           :y="200 + k * 25 - scrollY"
+                           :x="xForStudent"
+                           :y="yForStudent(k)"
                            :student="student.fields"
                            @mouseover="hoveredStudent = student"
                            @mouseout="hoveredStudent = null"
+                           @click="studentClick(student)"
                            :class="{fade: studentFade(student)}"></student-label>
-            <thumb v-for="(work, wk) in works"
+            <g v-for="(student, k) in studentsSorted"
+               :key="`st-${k}`">
+                <path v-for="({workid, path}, key) in pathsForStudent(student, k)"
+                      :class="{fade: pathFade(student, workid)}"
+                      :key="`path-${key}`"
+                      :d="path"
+                      stroke="black"
+                      fill="transparent" />
+
+            </g>
+            <thumb v-for="(work, wk) in worksSorted"
                    :x="xPosForWork(work)"
                    :y="yPosForWork(work)"
                    :key="`w-${wk}`"
                    :work="work"
                    :scroll="scrollY"
                    :selectedstudent="hoveredStudent"
+                   :hoveredWork="hoveredWork"
                    @hover="workHover"></thumb>
             <theme-header v-for="theme in themes"
                           :theme="theme"
@@ -47,38 +59,66 @@ module.exports = {
     data() {
         return {
             width: 1500,
-            height: 1000,
-            labelColWidth: 200,
-            themes: ["Space", "Collaboration", "Time", "Agency", "??"],
+            height: 1500,
+            studentSpacing: 25,
+            workSpacing: 110,
+            labelColWidth: 150,
+            themes: ["Space", "Collaboration", "Time", "Agency"],
             scrollY: 0,
             scrollX: 0,
             maxScrollX: 100,
-            maxScrollY: 1500,
             hoveredStudent: null,
-            hoveredWork: null
+            hoveredWork: null,
+            studentsSorted: [],
+            worksSorted: [],
+            tallestColumn: 0,
+            includeStudentsWithNoWork: false,
+            xForStudent: 200
         };
     },
-    props: ["works", "students"],
     components: {
         thumb: httpVueLoader("./thumb.vue"),
         "theme-header": httpVueLoader("./theme-header.vue"),
         "student-label": httpVueLoader("./student-label.vue")
     },
     methods: {
+        fetchData: function() {
+            var xhr = new XMLHttpRequest();
+            var self = this;
+            xhr.open("GET", workApiUrl);
+            xhr.onload = function() {
+                this.$store.commit(
+                    "setWorks",
+                    JSON.parse(xhr.responseText).records
+                );
+                self.works = this.$store.state.works;
+            };
+            xhr.send();
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", studentsApiUrl);
+            xhr2.onload = function() {
+                this.$store.commit(
+                    "setStudents",
+                    JSON.parse(xhr2.responseText).records
+                );
+                self.students = this.$store.state.students;
+            };
+            xhr2.send();
+        },
         xPosForTheme(theme) {
             var themeIndex = this.themes.indexOf(theme);
             return (
-                this.labelColWidth +
+                this.xForStudent +
+                100 +
                 (this.width - this.labelColWidth) *
                     (themeIndex / this.themes.length)
             );
         },
         themeForWork(work) {
-            return (
-                (work.fields["Theme / Week"] &&
-                    work.fields["Theme / Week"][0]) ||
-                "??"
-            );
+            return this.themesForWork(work)[0] || "??";
+        },
+        themesForWork(work) {
+            return work.fields["Theme / Week"] && work.fields["Theme / Week"];
         },
         xPosForWork(work) {
             var theme = this.themeForWork(work);
@@ -86,9 +126,9 @@ module.exports = {
         },
         yPosForWork(work) {
             const offset = 200;
-            const vSpacing = 110;
+            const vSpacing = this.workSpacing;
             const vIndex = this.yPositionsForWork[work.id] || 0;
-            return offset + vSpacing * vIndex - this.scrollY * 0.3;
+            return offset + vSpacing * vIndex - this.scrollY;
         },
         clamp(value, max, min) {
             return Math.min(Math.max(value, max), min);
@@ -109,29 +149,163 @@ module.exports = {
             }
             return false;
         },
+        pathFade(student, workid) {
+            if (this.hoveredStudent) {
+                return this.hoveredStudent.id != student.id;
+            } else if (this.hoveredWork) {
+                return this.hoveredWork.id != workid;
+            }
+            return true;
+        },
         workHover(work) {
             this.hoveredWork = work;
+        },
+        pathsForStudent(student, k) {
+            const xForStudent = this.xForStudent + 5;
+            const yForStudent = this.yForStudent(k);
+            const x2 = xForStudent + 100;
+            return student.fields["Work"].map(workid => {
+                const work = this.worksSorted.filter(w => w.id == workid)[0];
+                const xForWork = this.xPosForWork(work);
+                const yForWork = this.yPosForWork(work);
+                const x3 = xForWork - 100;
+                return {
+                    workid: workid,
+                    path: `M ${xForStudent} ${yForStudent} C ${x2} ${yForStudent}, ${x3} ${yForWork}, ${xForWork} ${yForWork}`
+                };
+            });
+        },
+        yForStudent(i) {
+            return (
+                200 +
+                i * this.studentSpacing -
+                this.scrollY * this.studentScrollMultiplier
+            );
+        },
+        studentClick(student) {
+            console.log("poosh");
+            this.$router.push({ name: "student", params: { id: student.id } });
+        },
+        processStudentsAndWorks() {
+            if (!this.students || !this.works) {
+                return;
+            }
+            let studentsToSort = [...this.students];
+            let worksToSort = [...this.works];
+            const studentsOrdered = [];
+            const worksOrdered = [];
+            const processWork = work => {
+                //exit if we've run out of works
+                if (
+                    !worksToSort.length ||
+                    !work ||
+                    worksOrdered.includes(work)
+                ) {
+                    return;
+                }
+                // remove this work from the list remaining
+                worksToSort = worksToSort.filter(w => w.id != work.id);
+
+                // add this work to the list
+                worksOrdered.push(work);
+
+                // get the other students
+                var studentsForWork = studentsToSort.filter(s =>
+                    work.fields["Students"].includes(s.id)
+                );
+
+                // process them
+                studentsForWork.forEach(processStudent);
+            };
+            const processStudent = student => {
+                console.log(`processing student ${student.fields.Name}`);
+                //exit if we've run out of students
+                if (
+                    !studentsToSort.length ||
+                    !student ||
+                    (!student.fields.Work && !this.includeStudentsWithNoWork) ||
+                    studentsOrdered.includes(student)
+                ) {
+                    return;
+                }
+                // remove this student from the list remaining
+                studentsToSort = studentsToSort.filter(s => s.id != student.id);
+                // add this student to the sorted list
+                studentsOrdered.push(student);
+                // get this student's works
+                const worksForStudent = worksToSort.filter(w =>
+                    w.fields["Students"].includes(student.id)
+                );
+                // process this student's works
+                worksForStudent.forEach(processWork);
+            };
+
+            while (studentsToSort.length) {
+                processStudent(studentsToSort.pop());
+            }
+
+            this.studentsSorted = studentsOrdered;
+            this.worksSorted = worksOrdered;
         }
     },
     computed: {
+        students() {
+            return this.$store.state.students;
+        },
+        works() {
+            return this.$store.state.works;
+        },
         viewbox() {
             return `0 0 ${this.width} ${this.height}`;
         },
         yPositionsForWork() {
-            if (!this.themes || !this.works) return {};
+            if (!this.themes || !this.worksSorted) return {};
             var themeDict = {};
             var yPosDict = {};
             for (let theme of this.themes) {
                 themeDict[theme] = 0;
             }
-            this.works.forEach(work => {
+            this.worksSorted.forEach(work => {
                 var workTheme = this.themeForWork(work);
                 const themeWorkCount = themeDict[workTheme];
                 yPosDict[work.id] = themeWorkCount;
                 themeDict[workTheme] += 1;
+                if (themeDict[workTheme] > this.tallestColumn) {
+                    this.tallestColumn = themeDict[workTheme];
+                }
             });
             return yPosDict;
+        },
+        maxHeightStudents() {
+            return this.studentsSorted.length * this.studentSpacing;
+        },
+        maxHeightWorks() {
+            return this.tallestColumn * this.workSpacing;
+        },
+        maxScrollY() {
+            return this.maxHeightWorks - this.height + 400;
+        },
+        studentScrollMultiplier() {
+            var winHeight = this.height - 400;
+            return (
+                (this.maxHeightStudents - winHeight) /
+                (this.maxHeightWorks - winHeight)
+            );
         }
+    },
+    watch: {
+        works() {
+            this.processStudentsAndWorks();
+        },
+        students() {
+            this.processStudentsAndWorks();
+        }
+    },
+    created() {
+        this.$store.dispatch("fetch");
+    },
+    mounted() {
+        this.processStudentsAndWorks();
     }
 };
 </script>
@@ -139,6 +313,10 @@ module.exports = {
 <style scoped>
 .student-label {
     transition: opacity 100ms;
+}
+
+path.fade {
+    opacity: 0.1;
 }
 
 .fade {
@@ -154,7 +332,7 @@ module.exports = {
 
 .wrapper {
     height: 100%;
-    position: absolute;
+    position: relative;
     width: 100%;
 }
 

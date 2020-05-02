@@ -8,13 +8,18 @@ body {
 }
 
 .bodycontainer {
-  align-items: center;
-  border: 1px solid green;
+  background: $mainGradient;
+  // align-items: center;
+  // border: 1px solid green;
   display:flex;
 }
 
+.wrapper {
+  position: relative;
+}
+
 #nav {
-  background: $mainGradient;
+  // background: $mainGradient;
   height: 100vh;
   min-width: 400px;
   padding-top: 15px;
@@ -53,7 +58,9 @@ div {
   display: relative;height: 300px;
   width: 300px;
 
-  .img { position: absolute; }
+  .img {
+      position: absolute;  z-index: -1;
+      }
 
   .text {
     font-size: 0.85em;
@@ -91,3 +98,24 @@ div {
 mainSvg {
   background: $mainGradient;
 }
+
+#thumbnail_container {
+  display: flex;
+  margin-top: 20px;
+  padding: 0 20px;
+
+  .thumbnail {
+    border: 2px solid black;height: 100px;
+    width: 100px;
+
+    &:hover {
+      transform: skew(0deg, 0deg) rotate(0deg) scale(1, 1) !important;
+    }
+
+    .image {height: 100%; object-fit: cover;  width: 100%; }
+
+    .work_names, .work_title, .work_url { 
+      display: none;
+    }
+  }
+

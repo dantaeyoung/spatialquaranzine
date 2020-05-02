@@ -1,5 +1,8 @@
 <template>
-    <g :style="transformClass" @mouseover="$emit('mouseover')" @mouseout="$emit('mouseout')">
+    <g :style="transformClass"
+       @mouseover="$emit('mouseover')"
+       @mouseout="$emit('mouseout')"
+       @click="$emit('click')">
         <text class="header">{{student["Name"]}}</text>
     </g>
 </template>

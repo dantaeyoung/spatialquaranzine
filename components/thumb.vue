@@ -61,15 +61,15 @@ module.exports = {
             hovered: false
         };
     },
-    props: ["work", "x", "y", "scroll", "selectedstudent"],
+    props: ["work", "x", "y", "scroll", "selectedstudent", "hoveredwork"],
     methods: {
         enterHover() {
             this.hovered = true;
-            this.$emit('hover', this.work)
+            this.$emit("hover", this.work);
         },
         leaveHover() {
             this.hovered = false;
-            this.$emit('hover', null)
+            this.$emit("hover", null);
         }
     },
     computed: {
@@ -88,9 +88,13 @@ module.exports = {
             return images ? images[0] : null;
         },
         smallThumb() {
-            return this.firstImage && this.firstImage.thumbnails
+            const smallThumb = this.firstImage && this.firstImage.thumbnails
                 ? this.firstImage.thumbnails.large.url
                 : null;
+                if(smallThumb == null) {
+                    return this.firstImage.url
+                }
+                return smallThumb;
         },
         opacityForScroll() {
             let scroll = this.y;
@@ -109,7 +113,12 @@ module.exports = {
                 } else {
                     return 0.2 * scroll;
                 }
+            } else if (this.hovered) {
+                return 1.0;
+            } else if (this.hoveredwork) {
+                return 0.2 * scroll;
             }
+
             return scroll;
         }
     }

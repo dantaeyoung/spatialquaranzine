@@ -17,22 +17,6 @@
 		"oAP": "/.gitignore",
 		"oF": 0
 		},
-	"/.newindex.html.swp": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/.newindex.html.swp",
-		"oF": 0
-		},
-	"/.style.scss.swp": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/.style.scss.swp",
-		"oF": 0
-		},
 	"/assets/images/logo.svg": {
 		"ft": 2097152,
 		"miP": 0,
@@ -79,6 +63,14 @@
 		"oAP": "/components/matrix.vue",
 		"oF": 0
 		},
+	"/components/student-details.vue": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/components/student-details.vue",
+		"oF": 0
+		},
 	"/components/student-label.vue": {
 		"cB": 0,
 		"ft": 8192,
@@ -117,6 +109,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/index.html",
+		"oF": 0
+		},
+	"/main.html": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/main.html",
 		"oF": 0
 		},
 	"/matrix.html": {
