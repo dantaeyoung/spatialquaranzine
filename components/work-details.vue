@@ -20,7 +20,8 @@
                 <div id="nav_arrows"
                      class="skew-n15">
                     <div id="left_arrow"
-                         class="nav-arrow nav-border">&lt;</div>
+                         class="nav-arrow nav-border"
+                         @click="goToWork(-1)">&lt;</div>
                     <div id="current_info"
                          class="nav-border">
                         <div class="title">{{title}}</div>
@@ -31,7 +32,8 @@
                                 {{student.fields['Name']}}</span></div>
                     </div>
                     <div id="right_arrow"
-                         class="nav-arrow nav-border">&gt;</div>
+                         class="nav-arrow nav-border"
+                         @click="goToWork(1)">&gt;</div>
                 </div>
             </div>
             <div>
@@ -52,8 +54,8 @@ module.exports = {
             if (!this.works || !this.works.length) {
                 return null;
             }
-            return this.works.filter(s => s.id == this.$route.params.id)[0]
-                .fields;
+            const work = this.works.filter(s => s.id == this.$route.params.id)[0]
+            return {...work.fields, id: work.id}
         },
         authors() {
             return this.students.filter(
@@ -98,6 +100,16 @@ module.exports = {
                     id: student.id,
                     studentName: student.fields["Name"].replace(" ", "")
                 }
+            });
+        },
+        goToWork(delta) {
+            const allIds = this.works.map(w => w.id);
+            const thisIndex = allIds.indexOf(this.work.id);
+            const newIndex =
+                (thisIndex + delta + this.works.length) % this.works.length;
+            this.$router.push({
+                name: "work",
+                params: { id: allIds[newIndex] }
             });
         }
     },

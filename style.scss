@@ -38,6 +38,7 @@ h1 {
   .logo {
     width: 100%;
   }
+
   &.indexView {
     width: 25vw;
 
@@ -78,11 +79,11 @@ div {
 
 #nav-description {
   display: relative;
-  height: 300px;
-  width: 300px;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  width: 300px;
 
   .img {
       position: absolute;  z-index: -1;
@@ -107,6 +108,7 @@ div {
   }
 
   .nav-arrow {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     font-weight: bold;
