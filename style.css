@@ -85,6 +85,16 @@ div {
   cursor: pointer;
 }
 
+a.icon-button {
+  -webkit-transition: all 500ms;
+  transition: all 500ms;
+}
+
+a.icon-button:hover {
+  -webkit-transform: translate(0px, -4px);
+          transform: translate(0px, -4px);
+}
+
 #nav-description {
   display: relative;
   display: -webkit-box;
@@ -144,6 +154,15 @@ div {
 }
 
 #nav_arrows .nav-arrow:hover {
+  -webkit-transform: translate(0px, -4px);
+          transform: translate(0px, -4px);
+}
+
+#nav_arrows a.icon-button {
+  background: red;
+}
+
+#nav_arrows a.icon-button:hover {
   -webkit-transform: translate(0px, -4px);
           transform: translate(0px, -4px);
 }

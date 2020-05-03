@@ -77,6 +77,14 @@ div {
   cursor: pointer;
 }
 
+a.icon-button {
+  transition: all 500ms;
+
+  &:hover {
+    transform: translate(0px,-4px);
+  }
+}
+
 #nav-description {
   display: relative;
   display: flex;
@@ -113,6 +121,14 @@ div {
     flex-direction: column;
     font-weight: bold;
     justify-content: center;
+
+    &:hover {
+      transform: translate(0px,-4px);
+    }
+  }
+
+  a.icon-button {
+    background: red;
 
     &:hover {
       transform: translate(0px,-4px);

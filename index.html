@@ -18,7 +18,10 @@
     <div class="bodycontainer" id="app">
         <div id="nav" :class="{indexView}">
             <div class="logo skewhover skew-n15 z10">
-                <img src="/assets/images/logo.svg" /></div>
+                <router-link to="/">
+                    <img src="/assets/images/logo.svg" />
+                </router-link>
+            </div>
             <div id="nav-description" class="skewhover skew-15">
                 <img class="img" src="/assets/images/textbox.svg" />
                 <div class="text">
@@ -30,9 +33,8 @@
                     Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
                 </div>
             </div>
-            <router-link to="/">index</router-link>
-            <router-link to="/about">about</router-link>
-            <a href="#" @click="randomize">randomize</a>
+            <router-link class="icon-button" to="/matrix"><img src="./assets/images/Index.svg" /></router-link>
+            <a href="#" class="icon-button" @click="randomize"><img src="./assets/images/Randomize.svg" /></a>
             <div id="thumbnail_container">
                 <thumb v-for="work in works" :work="work" />
             </div>
@@ -48,8 +50,8 @@
     <script type="module">
         const Thumb = httpVueLoader('components/work-thumb.vue')
 
-        import { router } from './router.js'; 
-        import { store } from './store.js'; 
+        import { router } from './router.js';
+        import { store } from './store.js';
 
         const app = new Vue({
             el: "#app",

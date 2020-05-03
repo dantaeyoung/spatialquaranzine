@@ -12,7 +12,7 @@
             <div v-else-if="vimeo"
                  class="imageWrapper">
                 <iframe :src="vimeo"
-                        height="491"
+                        class="video-embed"
                         frameborder="0"
                         allow="autoplay; fullscreen"
                         allowfullscreen></iframe>
