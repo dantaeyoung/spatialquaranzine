@@ -72,6 +72,7 @@ module.exports = {
             studentsSorted: [],
             worksSorted: [],
             tallestColumn: 0,
+            themeDict: {},
             includeStudentsWithNoWork: false,
             xForStudent: 200
         };
@@ -115,11 +116,11 @@ module.exports = {
             );
         },
         themeForWork(work) {
-            const themes = this.themesForWork(work)
-            return themes && themes[0] || "??";
+            const themes = this.themesForWork(work);
+            return (themes && themes[0]) || "??";
         },
         themesForWork(work) {
-            if(!work) return []
+            if (!work) return [];
             return work.fields["Theme / Week"] && work.fields["Theme / Week"];
         },
         xPosForWork(work) {
@@ -129,8 +130,19 @@ module.exports = {
         yPosForWork(work) {
             const offset = 200;
             const vSpacing = this.workSpacing;
-            const vIndex = this.yPositionsForWork && this.yPositionsForWork[work.id] || 0;
-            return offset + vSpacing * vIndex - this.scrollY;
+            const vIndex =
+                (this.yPositionsForWork && this.yPositionsForWork[work.id]) ||
+                0;
+            return (
+                offset +
+                vSpacing * vIndex -
+                this.scrollY * this.scrollRatioForWork(work)
+            );
+        },
+        scrollRatioForWork(work) {
+            const theme = this.themeForWork(work);
+            const themeIndex = this.themes.indexOf(theme);
+            return this.themeScrollRatios[themeIndex];
         },
         clamp(value, max, min) {
             return Math.min(Math.max(value, max), min);
@@ -185,7 +197,13 @@ module.exports = {
             );
         },
         studentClick(student) {
-            this.$router.push({ name: "student", params: { id: student.id, studentName: student.fields['Name'].replace(' ', '') } });
+            this.$router.push({
+                name: "student",
+                params: {
+                    id: student.id,
+                    studentName: student.fields["Name"].replace(" ", "")
+                }
+            });
         },
         processStudentsAndWorks() {
             if (!this.students || !this.works) {
@@ -275,6 +293,7 @@ module.exports = {
                     this.tallestColumn = themeDict[workTheme];
                 }
             });
+            this.themeDict = themeDict;
             return yPosDict;
         },
         maxHeightStudents() {
@@ -292,6 +311,13 @@ module.exports = {
                 (this.maxHeightStudents - winHeight) /
                 (this.maxHeightWorks - winHeight)
             );
+        },
+        themeScrollRatios() {
+            const ratios = this.themes.map(
+                t => this.themeDict[t] / this.tallestColumn
+            );
+
+            return ratios;
         }
     },
     watch: {
