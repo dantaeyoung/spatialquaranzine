@@ -1,102 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
     <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vuex"></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <title>Spatial Quaranzine</title>
-  </head>
+</head>
 
-  <body>
-    <div id="bodyContainer" class="bodycontainer">
+<body>
+    <div class="bodycontainer" id="app">
+        <div id="nav" :class="{indexView}">
+            <div class="logo skewhover skew-n15 z10">
+                <img src="/assets/images/logo.svg" /></div>
+            <div id="nav-description" class="skewhover skew-15">
+                <img class="img" src="/assets/images/textbox.svg" />
+                <div class="text">
+                    Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our
+                    present moment and near future, using spatial and architectural representations.
 
-      
-    <section id="nav">
-        <div class="logo skewhover skew-n15 z10"><img src="/assets/images/logo.svg" /></div>
-        <div id="nav-description" class="skewhover skew-15">
-          <img class="img" src="/assets/images/textbox.svg" />
-          <div class="text">
-            Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our present moment and near future, using spatial and architectural representations.
+                    Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in
+                    Spring 2020 by
+                    Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
+                </div>
+            </div>
+            <router-link to="/" >index</router-link>
+            <div id="thumbnail_container">
+                <thumb v-for="work in works" :work="work" />
+            </div>
 
-Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in Spring 2020 by
-Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.  
-          </div>
         </div>
 
-      <thumbnailnav v-bind="{works, students}" v-on:thumbclicked="handleThumbClick"></thumbnailnav>
+        <div id="work_display">
+            <router-view></router-view>
+        </div>
 
-    </section>
-    <section id="work_display">
-      <workdisplay v-bind="{works, students, currentwork}"></workdisplay>
-    </section>
-  </div>
-
+    </div>
 
     <script>
-      var tableID = "appSF4u3aLqrtbzJ8";
-      var tableName = "Work";
-      var apikey = "keyoQpvlH7D3w9kIB"; //normally this should NEVER be exposed. However, this api key is to an account that has read-only access to publicly viewable airtables.
-      var tableview = "Grid%20view";
-      var workApiUrl = `https://api.airtable.com/v0/${tableID}/Work?api_key=${apikey}&view=${tableview}`;
-      var studentsApiUrl = `https://api.airtable.com/v0/${tableID}/Students?api_key=${apikey}&view=${tableview}`;
+        var tableID = "appSF4u3aLqrtbzJ8";
+        var apikey = "keyoQpvlH7D3w9kIB"; //normally this should NEVER be exposed. However, this api key is to an account that has read-only access to publicly viewable airtables.
+        var tableview = "Grid%20view";
+        var workApiUrl = `https://api.airtable.com/v0/${tableID}/Work?api_key=${apikey}&view=${tableview}`;
+        var studentsApiUrl = `https://api.airtable.com/v0/${tableID}/Students?api_key=${apikey}&view=${tableview}`;
 
-    window.app = new Vue({
-        el: "#bodyContainer",
-        components: {
-          'thumbnailnav': httpVueLoader('components/thumbnailnav.vue'),
-          'workdisplay': httpVueLoader('components/workdisplay.vue'),
-        },
-        data: {
-          works: null,
-          students: null,
-          currentwork: null,
-          timer: null,
-        },
-        created: function() {
-          this.fetchData();
-          // this.timer = setInterval(this.fetchData, 120 * 1000); 
-        },
-        methods: {
-          fetchData: function () {
-              var xhr = new XMLHttpRequest();
-              var self = this;
-              xhr.open("GET", workApiUrl);
-              xhr.onload = function () {
-                  self.works = JSON.parse(xhr.responseText).records;
-                console.log("works", self.works);
-              };
-              xhr.send();
-              var xhr2 = new XMLHttpRequest();
-              var self = this;
-              xhr2.open("GET", studentsApiUrl);
-              xhr2.onload = function () {
-                  self.students = JSON.parse(xhr2.responseText).records;
-              };
-              xhr2.send();
-          },
-          handleThumbClick: function(eventID) {
-            console.log("this is newindex speaking; someone clicked", eventID);
-            this.currentwork = eventID; // this passes it down to workdisplay via props
-          }
-        }
-      });
+        const Matrix = httpVueLoader('components/matrix.vue')
+        const Student = httpVueLoader('components/student-details.vue')
+        const Work = httpVueLoader('components/work-details.vue')
+        const Thumb = httpVueLoader('components/work-thumb.vue')
 
-      $(document).ready(() => {
+        // 3. Create the router instance and pass the `routes` option
+        const router = new VueRouter({
+            routes: [{
+                name: 'matrix',
+                path: '/',
+                component: Matrix,
+            },
+            {
+                name: 'student',
+                path: '/student/:id',
+                component: Student,
+            },
+            {
+                name: 'work',
+                path: '/work/:id',
+                component: Work,
+            }]
+        })
 
-        $(".skewhover").hover(function() {
-          $(this).addClass("unskew");
-        }, function() {
-          $(this).removeClass("unskew");
+        const store = new Vuex.Store({
+            state: {
+                students: [],
+                works: [],
+                hasLoaded: false
+            },
+            mutations: {
+                setStudents(state, students) {
+                    state.students = students
+                },
+                setWorks(state, works) {
+                    state.works = works
+                },
+                setLoaded(state) {
+                    state.hasLoaded = true
+                }
+            },
+            actions: {
+                fetch(context) {
+                    if (!context.state.hasLoaded) {
+                        context.dispatch('fetchStudentsAndWorks')
+                    }
+                },
+                fetchStudentsAndWorks(context) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", workApiUrl);
+                    xhr.onload = function () {
+                        context.commit(
+                            "setWorks",
+                            JSON.parse(xhr.responseText).records
+                        );
+                    };
+                    xhr.send();
+                    var xhr2 = new XMLHttpRequest();
+                    xhr2.open("GET", studentsApiUrl);
+                    xhr2.onload = function () {
+                        context.commit(
+                            "setStudents",
+                            JSON.parse(xhr2.responseText).records
+                        );
+                    };
+                    xhr2.send();
+                    context.commit('setLoaded')
+                }
+            }
+        })
+
+        // 4. Create and mount the root instance.
+        // Make sure to inject the router with the router option to make the
+        // whole app router-aware.
+        const app = new Vue({
+            el: "#app",
+            router,
+            store,
+            components: {
+                'thumb': Thumb
+            },
+            computed: {
+                ...Vuex.mapState(['students', 'works']),
+                indexView() {
+                    return this.$route.name == 'matrix'
+                }
+            },
+            created() {
+                this.$store.dispatch('fetch')
+            }
         });
-        console.log("ready")
-      });
+
+        $(document).ready(() => {
+
+            $(".skewhover").hover(function () {
+                $(this).addClass("unskew");
+            }, function () {
+                $(this).removeClass("unskew");
+            });
+            console.log("ready")
+        });
     </script>
-  </body>
+</body>
+
 </html>

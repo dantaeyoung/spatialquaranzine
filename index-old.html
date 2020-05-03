@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Spatial Quaranzine</title>
+  </head>
+
+  <body>
+    <div id="bodyContainer" class="bodycontainer">
+
+      
+    <section id="nav">
+        <div class="logo skewhover skew-n15 z10"><img src="/assets/images/logo.svg" /></div>
+        <div id="nav-description" class="skewhover skew-15">
+          <img class="img" src="/assets/images/textbox.svg" />
+          <div class="text">
+            Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our present moment and near future, using spatial and architectural representations.
+
+Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in Spring 2020 by
+Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.  
+          </div>
+        </div>
+
+      <thumbnailnav v-bind="{works, students}" v-on:thumbclicked="handleThumbClick"></thumbnailnav>
+
+    </section>
+    <section id="work_display">
+      <workdisplay v-bind="{works, students, currentwork}"></workdisplay>
+    </section>
+  </div>
+
+
+    <script>
+      var tableID = "appSF4u3aLqrtbzJ8";
+      var tableName = "Work";
+      var apikey = "keyoQpvlH7D3w9kIB"; //normally this should NEVER be exposed. However, this api key is to an account that has read-only access to publicly viewable airtables.
+      var tableview = "Grid%20view";
+      var workApiUrl = `https://api.airtable.com/v0/${tableID}/Work?api_key=${apikey}&view=${tableview}`;
+      var studentsApiUrl = `https://api.airtable.com/v0/${tableID}/Students?api_key=${apikey}&view=${tableview}`;
+
+    window.app = new Vue({
+        el: "#bodyContainer",
+        components: {
+          'thumbnailnav': httpVueLoader('components/thumbnailnav.vue'),
+          'workdisplay': httpVueLoader('components/workdisplay.vue'),
+        },
+        data: {
+          works: null,
+          students: null,
+          currentwork: null,
+          timer: null,
+        },
+        created: function() {
+          this.fetchData();
+          // this.timer = setInterval(this.fetchData, 120 * 1000); 
+        },
+        methods: {
+          fetchData: function () {
+              var xhr = new XMLHttpRequest();
+              var self = this;
+              xhr.open("GET", workApiUrl);
+              xhr.onload = function () {
+                  self.works = JSON.parse(xhr.responseText).records;
+                console.log("works", self.works);
+              };
+              xhr.send();
+              var xhr2 = new XMLHttpRequest();
+              var self = this;
+              xhr2.open("GET", studentsApiUrl);
+              xhr2.onload = function () {
+                  self.students = JSON.parse(xhr2.responseText).records;
+              };
+              xhr2.send();
+          },
+          handleThumbClick: function(eventID) {
+            console.log("this is newindex speaking; someone clicked", eventID);
+            this.currentwork = eventID; // this passes it down to workdisplay via props
+          }
+        }
+      });
+
+      $(document).ready(() => {
+
+        $(".skewhover").hover(function() {
+          $(this).addClass("unskew");
+        }, function() {
+          $(this).removeClass("unskew");
+        });
+        console.log("ready")
+      });
+    </script>
+  </body>
+</html>
