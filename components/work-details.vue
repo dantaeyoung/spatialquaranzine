@@ -1,7 +1,8 @@
 <template>
     <div class="work-details">
         <div class="scrollContainer">
-            <div v-if="youtube" class="imageWrapper">
+            <div v-if="youtube"
+                 class="imageWrapper">
                 <iframe class="video-embed"
                         :src="youtube"
                         frameborder="0"
@@ -91,7 +92,13 @@ module.exports = {
     },
     methods: {
         goToStudent(student) {
-            this.$router.push({ name: "student", params: { id: student.id } });
+            this.$router.push({
+                name: "student",
+                params: {
+                    id: student.id,
+                    studentName: student.fields["Name"].replace(" ", "")
+                }
+            });
         }
     },
     created() {

@@ -184,8 +184,7 @@ module.exports = {
             );
         },
         studentClick(student) {
-            console.log("poosh");
-            this.$router.push({ name: "student", params: { id: student.id } });
+            this.$router.push({ name: "student", params: { id: student.id, studentName: student.fields['Name'].replace(' ', '') } });
         },
         processStudentsAndWorks() {
             if (!this.students || !this.works) {
