@@ -79,7 +79,7 @@ module.exports = {
                 this.firstImage && this.firstImage.thumbnails
                     ? this.firstImage.thumbnails.large.url
                     : null;
-            if (smallThumb == null) {
+            if (smallThumb == null && this.firstImage) {
                 return this.firstImage.url;
             }
             return smallThumb;

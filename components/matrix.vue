@@ -115,7 +115,8 @@ module.exports = {
             );
         },
         themeForWork(work) {
-            return this.themesForWork(work)[0] || "??";
+            const themes = this.themesForWork(work)
+            return themes && themes[0] || "??";
         },
         themesForWork(work) {
             if(!work) return []

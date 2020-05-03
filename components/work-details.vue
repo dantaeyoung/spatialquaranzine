@@ -9,6 +9,22 @@
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
             </div>
+            <div v-else-if="vimeo"
+                 class="imageWrapper">
+                <iframe :src="vimeo"
+                        height="491"
+                        frameborder="0"
+                        allow="autoplay; fullscreen"
+                        allowfullscreen></iframe>
+            </div>
+            <div v-else-if="otherUrl"
+                 class="imageWrapper">
+                <iframe 
+                :src="otherUrl"
+                        :style="{width: '100%'}"
+                        height="640"
+                        frameborder="0"></iframe>
+            </div>
             <div v-for="(image, key) in images"
                  :key="key"
                  class="imageWrapper">
@@ -54,8 +70,10 @@ module.exports = {
             if (!this.works || !this.works.length) {
                 return null;
             }
-            const work = this.works.filter(s => s.id == this.$route.params.id)[0]
-            return {...work.fields, id: work.id}
+            const work = this.works.filter(
+                s => s.id == this.$route.params.id
+            )[0];
+            return { ...work.fields, id: work.id };
         },
         authors() {
             return this.students.filter(
@@ -75,7 +93,7 @@ module.exports = {
         },
         images() {
             return (
-                this.work && this.work["Images (PNG, JPG, GIF)"].map(i => i.url)
+                this.work && this.work["Images (PNG, JPG, GIF)"] && this.work["Images (PNG, JPG, GIF)"].length && this.work["Images (PNG, JPG, GIF)"].map(i => i.url)
             );
         },
         youtube() {
@@ -89,6 +107,23 @@ module.exports = {
                     }
                     return `https://www.youtube.com/embed/${url}`;
                 }
+            }
+        },
+        vimeo() {
+            if (this.work && this.work["Public URL / Video"]) {
+                let url = this.work["Public URL / Video"];
+                if (url.includes("vimeo")) {
+                    url = url.replace("https://vimeo.com/", "");
+                    if (url.includes("&")) {
+                        url = url.split("&")[0];
+                    }
+                    return `https://player.vimeo.com/video/${url}`;
+                }
+            }
+        },
+        otherUrl() {
+            if (this.work && this.work["Public URL / Video"]) {
+                return this.work["Public URL / Video"];
             }
         }
     },

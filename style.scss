@@ -113,6 +113,10 @@ div {
     flex-direction: column;
     font-weight: bold;
     justify-content: center;
+
+    &:hover {
+      transform: translate(0px,-4px);
+    }
   }
 
   .nav-border {

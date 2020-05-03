@@ -143,6 +143,11 @@ div {
           justify-content: center;
 }
 
+#nav_arrows .nav-arrow:hover {
+  -webkit-transform: translate(0px, -4px);
+          transform: translate(0px, -4px);
+}
+
 #nav_arrows .nav-border {
   border: 3px solid black;
   margin: 2px;
