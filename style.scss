@@ -25,21 +25,19 @@ h1 {
 }
 
 #nav {
+  display: flex;
+  flex-direction: column;
   // background: $mainGradient;
   height: 100vh;
   min-width: 400px;
   overflow: hidden;
+  overflow: scroll;
   padding-top: 15px;
   width: 40vw;
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
 
   .logo {
     width: 100%;
-
+  }
   &.indexView {
     width: 25vw;
 
@@ -83,8 +81,8 @@ div {
   height: 300px;
   width: 300px;
   display: flex;
-justify-content: center;
-flex-direction: column;
+  justify-content: center;
+  flex-direction: column;
 
   .img {
       position: absolute;  z-index: -1;
@@ -127,4 +125,25 @@ flex-direction: column;
   font-weight: bold;
 }
 
+#thumbnail_container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 0 20px;
+
+  .thumbnail {
+    border: 2px solid black;
+    cursor: pointer;height: 100px;
+    width: 100px;
+
+    &:hover {
+      transform: skew(0deg, 0deg) rotate(0deg) scale(1, 1) !important;
+    }
+
+    .image {height: 100%; object-fit: cover;  width: 100%; }
+
+    .work_names, .work_title, .work_url { 
+      display: none;
+    }
+  }
 }
