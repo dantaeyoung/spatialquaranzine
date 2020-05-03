@@ -83,29 +83,6 @@ module.exports = {
         "student-label": httpVueLoader("./student-label.vue")
     },
     methods: {
-        fetchData: function() {
-            var xhr = new XMLHttpRequest();
-            var self = this;
-            xhr.open("GET", workApiUrl);
-            xhr.onload = function() {
-                this.$store.commit(
-                    "setWorks",
-                    JSON.parse(xhr.responseText).records
-                );
-                self.works = this.$store.state.works;
-            };
-            xhr.send();
-            var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", studentsApiUrl);
-            xhr2.onload = function() {
-                this.$store.commit(
-                    "setStudents",
-                    JSON.parse(xhr2.responseText).records
-                );
-                self.students = this.$store.state.students;
-            };
-            xhr2.send();
-        },
         xPosForTheme(theme) {
             var themeIndex = this.themes.indexOf(theme);
             return (
@@ -116,8 +93,10 @@ module.exports = {
             );
         },
         themeForWork(work) {
-            const themes = this.themesForWork(work);
-            return (themes && themes[0]) || "??";
+            const index = this.works.map(w => w.id).indexOf(work.id);
+            return this.$store.state.workThemes[index];
+            // const themes = this.themesForWork(work);
+            // return (themes && themes[0]) || "??";
         },
         themesForWork(work) {
             if (!work) return [];

@@ -30,7 +30,9 @@
                     Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
                 </div>
             </div>
-            <router-link to="/" >index</router-link>
+            <router-link to="/">index</router-link>
+            <router-link to="/about">about</router-link>
+            <a href="#" @click="randomize">randomize</a>
             <div id="thumbnail_container">
                 <thumb v-for="work in works" :work="work" />
             </div>
@@ -55,6 +57,27 @@
         const Work = httpVueLoader('components/work-details.vue')
         const Thumb = httpVueLoader('components/work-thumb.vue')
 
+
+        // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+
         // 3. Create the router instance and pass the `routes` option
         const router = new VueRouter({
             routes: [{
@@ -78,23 +101,65 @@
             state: {
                 students: [],
                 works: [],
-                hasLoaded: false
+                workThemes: [],
+                hasLoaded: false,
+                shuffleIndex: 0,
             },
             mutations: {
                 setStudents(state, students) {
-                    state.students = students
+                    state.students = students;
                 },
                 setWorks(state, works) {
-                    state.works = works
+                    state.works = works;
+                    const themes = [];
+                    let i = 0;
+                    state.works.forEach(work => {
+                        const themeWeek = work.fields["Theme / Week"]
+                        if (themeWeek && themeWeek.length) {
+                            themes.push(themeWeek[(state.shuffleIndex + i) % themeWeek.length])
+                        }
+                        i++;
+                    });
+                    state.workThemes = themes;
+                },
+                updateThemes(state) {
+                    const themes = [];
+                    state.works.forEach(work => {
+                        const themeWeek = work.fields["Theme / Week"]
+                        if (themeWeek && themeWeek.length) {
+                            themes.push(themeWeek[state.shuffleIndex % themeWeek.length])
+                        }
+                    });
+                    state.workThemes = themes;
                 },
                 setLoaded(state) {
-                    state.hasLoaded = true
+                    state.hasLoaded = true;
+                },
+                setWorkThemes(state, workThemes) {
+                    state.workThemes = workThemes;
+                },
+                incrementShuffle(state) {
+                    state.shuffleIndex++;
                 }
             },
             actions: {
+                incrementShuffle(context) {
+                    context.commit('incrementShuffle');
+                    context.commit('updateThemes');
+                },
+                shuffle(context) {
+                    console.log('shuffling');
+                    context.commit('incrementShuffle');
+                    let works = [...context.state.works]
+                    shuffle(works)
+                    context.commit('setWorks', works)
+                    let students = [...context.state.students]
+                    shuffle(students)
+                    context.commit('setStudents', students)
+                },
                 fetch(context) {
                     if (!context.state.hasLoaded) {
-                        context.dispatch('fetchStudentsAndWorks')
+                        context.dispatch('fetchStudentsAndWorks');
                     }
                 },
                 fetchStudentsAndWorks(context) {
@@ -139,6 +204,11 @@
             },
             created() {
                 this.$store.dispatch('fetch')
+            },
+            methods: {
+                randomize() {
+                    this.$store.dispatch('shuffle')
+                }
             }
         });
 
