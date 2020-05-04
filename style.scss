@@ -42,6 +42,10 @@ h1 {
   &.indexView {
     width: 25vw;
 
+    #thumbnail_container {
+      opacity: 0;
+    }
+
     #thumbnail_container .thumbnail{
       height: 80px;
       width: 80px;
@@ -85,12 +89,16 @@ a.icon-button {
   }
 }
 
-#nav-description {
-  display: relative;
+.icons { 
+  display: flex;
+}
+
+.nav-description {
   display: flex;
   flex-direction: column;
   height: 300px;
   justify-content: center;
+  position: relative;
   width: 300px;
 
   .img {

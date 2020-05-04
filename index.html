@@ -22,7 +22,7 @@
                     <img src="/assets/images/logo.svg" />
                 </router-link>
             </div>
-            <div id="nav-description" class="skewhover skew-15">
+            <div v-show="!aboutView" class="nav-description skewhover skew-15">
                 <img class="img" src="/assets/images/textbox.svg" />
                 <div class="text">
                     Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our
@@ -33,8 +33,10 @@
                     Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
                 </div>
             </div>
-            <router-link class="icon-button" to="/matrix"><img src="./assets/images/Index.svg" /></router-link>
-            <a href="#" class="icon-button" @click="randomize"><img src="./assets/images/Randomize.svg" /></a>
+            <div class="icons">
+                <router-link class="icon-button" to="/matrix"><img src="./assets/images/Index.svg" /></router-link>
+                <a href="#" class="icon-button" @click="randomize"><img src="./assets/images/Randomize.svg" /></a>
+            </div>
             <div id="thumbnail_container">
                 <thumb v-for="work in works" :work="work" />
             </div>
@@ -64,6 +66,9 @@
                 ...Vuex.mapState(['students', 'works']),
                 indexView() {
                     return this.$route.name == 'matrix'
+                },
+                aboutView() {
+                    return this.$route.name == 'about'
                 }
             },
             created() {

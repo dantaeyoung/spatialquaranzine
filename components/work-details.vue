@@ -19,8 +19,7 @@
             </div>
             <div v-else-if="otherUrl"
                  class="imageWrapper">
-                <iframe 
-                :src="otherUrl"
+                <iframe :src="otherUrl"
                         :style="{width: '100%'}"
                         height="640"
                         frameborder="0"></iframe>
@@ -52,16 +51,18 @@
                          @click="goToWork(1)">&gt;</div>
                 </div>
             </div>
-            <div>
-                <p>
-                    {{work && work['Description']}}
-                </p>
+            <div style="transform: translate(0px, -100px);">
+                <plan-text-box v-if="work" :class="{hide: !work['Description']}">
+                    {{work && work['Description']}}</plan-text-box>
             </div>
         </div>
     </div>
 </template>
 <script>
 module.exports = {
+    components: {
+        planTextBox: httpVueLoader("components/plan-text-box.vue")
+    },
     data() {
         return {};
     },
@@ -93,7 +94,10 @@ module.exports = {
         },
         images() {
             return (
-                this.work && this.work["Images (PNG, JPG, GIF)"] && this.work["Images (PNG, JPG, GIF)"].length && this.work["Images (PNG, JPG, GIF)"].map(i => i.url)
+                this.work &&
+                this.work["Images (PNG, JPG, GIF)"] &&
+                this.work["Images (PNG, JPG, GIF)"].length &&
+                this.work["Images (PNG, JPG, GIF)"].map(i => i.url)
             );
         },
         youtube() {
@@ -154,8 +158,24 @@ module.exports = {
 };
 </script>
 <style scoped>
+.text-wrapper {
+    max-height: 230px;
+    overflow-y: scroll;
+}
+
+.hide {
+    opacity: 0;
+}
+
+.authors span {
+    cursor: pointer;
+    padding-left: 5px;
+}
+
 .imageWrapper {
     margin: 10px;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .scrollContainer {
@@ -181,7 +201,8 @@ p {
 
 img {
     margin: auto;
-    max-height: 500px;
+    max-height: 100%;
+    max-width: 100%;
     width: auto;
 }
 

@@ -232,7 +232,7 @@ module.exports = {
                 studentsOrdered.push(student);
                 // get this student's works
                 const worksForStudent = worksToSort.filter(w =>
-                    w.fields["Students"].includes(student.id)
+                    w.fields["Students"] && w.fields["Students"].includes(student.id)
                 );
                 // process this student's works
                 worksForStudent.forEach(processWork);

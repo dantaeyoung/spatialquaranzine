@@ -2,7 +2,8 @@
     <div>
         <h1>{{ name }}</h1>
         <thumb v-for="(work, k) in worksForStudent"
-               :key="k" :work="work" />
+               :key="k"
+               :work="work" />
     </div>
 </template>
 <script>
@@ -18,8 +19,10 @@ module.exports = {
             if (!this.students || !this.students.length) {
                 return null;
             }
-            return this.students.filter(s => s.id == this.$route.params.id)[0]
-                .fields;
+            const foundStudent = this.students.filter(
+                s => s.id == this.$route.params.id
+            );
+            return foundStudent[0] && foundStudent[0].fields;
         },
         name() {
             return this.student && this.student["Name"];
@@ -31,8 +34,10 @@ module.exports = {
             return this.$store.state.works;
         },
         worksForStudent() {
-            return this.works.filter(w =>
-                w.fields["Students"].includes(this.$route.params.id)
+            return this.works.filter(
+                w =>
+                    w.fields["Students"] &&
+                    w.fields["Students"].includes(this.$route.params.id)
             );
         }
     },

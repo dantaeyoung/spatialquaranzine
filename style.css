@@ -46,6 +46,10 @@ h1 {
   width: 25vw;
 }
 
+#nav.indexView #thumbnail_container {
+  opacity: 0;
+}
+
 #nav.indexView #thumbnail_container .thumbnail {
   height: 80px;
   width: 80px;
@@ -95,8 +99,13 @@ a.icon-button:hover {
           transform: translate(0px, -4px);
 }
 
-#nav-description {
-  display: relative;
+.icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav-description {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -108,15 +117,16 @@ a.icon-button:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  position: relative;
   width: 300px;
 }
 
-#nav-description .img {
+.nav-description .img {
   position: absolute;
   z-index: -1;
 }
 
-#nav-description .text {
+.nav-description .text {
   font-size: 0.85em;
   padding: 30px;
 }
