@@ -17,19 +17,51 @@
 		"oAP": "/.gitignore",
 		"oF": 0
 		},
-	"/.newindex.html.swp": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/.newindex.html.swp",
-		"oF": 0
+	"/assets/images/Index.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "/assets/images/Index.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
 		},
 	"/assets/images/logo.svg": {
 		"ft": 2097152,
 		"miP": 0,
 		"oA": 2,
 		"oAP": "/assets/images/logo.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
+		},
+	"/assets/images/mode_graph.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "/assets/images/mode_graph.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
+		},
+	"/assets/images/mode_list.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "/assets/images/mode_list.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
+		},
+	"/assets/images/Randomize.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "/assets/images/Randomize.svg",
 		"oF": 0,
 		"opt": 0,
 		"plM": 52780316221407,
@@ -55,20 +87,12 @@
 		"plM": 52780316221407,
 		"prP": 0
 		},
-	"/components/.thumbnailnav.vue.swp": {
+	"/components/about.vue": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
-		"oAP": "/components/.thumbnailnav.vue.swp",
-		"oF": 0
-		},
-	"/components/.workdisplay.vue.swp": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/components/.workdisplay.vue.swp",
+		"oAP": "/components/about.vue",
 		"oF": 0
 		},
 	"/components/matrix.vue": {
@@ -77,6 +101,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/components/matrix.vue",
+		"oF": 0
+		},
+	"/components/plan-text-box.vue": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/components/plan-text-box.vue",
 		"oF": 0
 		},
 	"/components/student-details.vue": {
@@ -143,6 +175,14 @@
 		"oAP": "/components/workdisplay.vue",
 		"oF": 0
 		},
+	"/index-old.html": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/index-old.html",
+		"oF": 0
+		},
 	"/index.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -151,20 +191,12 @@
 		"oAP": "/index.html",
 		"oF": 0
 		},
-	"/main.html": {
+	"/Mockups/icons.ai": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
-		"oAP": "/main.html",
-		"oF": 0
-		},
-	"/matrix.html": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/matrix.html",
+		"oAP": "/Mockups/icons.ai",
 		"oF": 0
 		},
 	"/Mockups/mockup-1.indd": {
@@ -174,6 +206,26 @@
 		"oA": 0,
 		"oAP": "/Mockups/mockup-1.indd",
 		"oF": 0
+		},
+	"/Mockups/mode_graph.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "/Mockups/mode_graph.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
+		},
+	"/Mockups/mode_list.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "/Mockups/mode_list.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
 		},
 	"/Mockups/spatial_quaranzine_logos-01.svg": {
 		"ft": 2097152,
@@ -220,6 +272,28 @@
 		"oA": 0,
 		"oAP": "/Mockups/~mockup-1~gn5(2s.idlk",
 		"oF": 0
+		},
+	"/router.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/router-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/store.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/store-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
 		},
 	"/style.css": {
 		"aP": 1,
