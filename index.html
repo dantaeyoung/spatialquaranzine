@@ -74,7 +74,8 @@
                 }
             },
             created() {
-                this.$store.dispatch('fetch')
+                this.$store.dispatch('fetch');
+                this.$store.dispatch('shuffle');
             },
             methods: {
                 randomize() {
