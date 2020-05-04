@@ -178,12 +178,6 @@ module.exports = {
     max-width: 100%;
 }
 
-.scrollContainer {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-}
-
 .work-details {
     display: grid;
     grid-template-rows: 80% 20%;

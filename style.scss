@@ -10,9 +10,15 @@ body {
 
 .bodycontainer {
   background: $mainGradient;
-  // align-items: center;
-  // border: 1px solid green;
-  display:flex;
+  display:grid;
+  grid-template-columns: 30vw auto;
+
+}
+
+.scrollContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 h1 {
@@ -33,28 +39,23 @@ h1 {
   overflow: hidden;
   overflow: scroll;
   padding-top: 15px;
-  width: 40vw;
+  width: 100%;
 
   .logo {
     width: 100%;
   }
 
   &.indexView {
-    width: 25vw;
 
     #thumbnail_container {
       opacity: 0;
-    }
-
-    #thumbnail_container .thumbnail{
-      height: 80px;
-      width: 80px;
     }
   }
 }
 
 #work_display {
   flex-grow: 1;
+  height: 100vh;
 }
 
 div {

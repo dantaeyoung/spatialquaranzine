@@ -1,9 +1,12 @@
 <template>
-    <div>
+    <div class="workDetails">
         <h1>{{ name }}</h1>
-        <thumb v-for="(work, k) in worksForStudent"
-               :key="k"
-               :work="work" />
+        <div class="scrollContainer">
+            <thumb class="work-thumb unskew"
+                   v-for="(work, k) in worksForStudent"
+                   :key="k"
+                   :work="work" />
+        </div>
     </div>
 </template>
 <script>
@@ -46,3 +49,14 @@ module.exports = {
     }
 };
 </script>
+<style scoped>
+.workDetails {
+    display: grid;
+    grid-template-rows: 100px auto;
+    height: 100vh;
+}
+
+.work-thumb {
+    padding-bottom: 50px;
+}
+</style>
