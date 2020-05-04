@@ -65,6 +65,14 @@ h1 {
   height: 100vh;
 }
 
+.draft-label {
+  bottom: -52px;
+  color: red;
+  position: absolute;
+  right: 4px;
+  text-decoration: none;
+}
+
 div {
   -webkit-transition: all 500ms;
   transition: all 500ms;
