@@ -1,18 +1,20 @@
 <template>
     <div class="workDetails">
-        <h1>{{ name }}</h1>
         <div class="scrollContainer">
-            <thumb class="work-thumb unskew"
+            <workstack
                    v-for="(work, k) in worksForStudent"
                    :key="k"
                    :work="work" />
+        </div>
+        <div class="header" style="grid-row: 1;">
+        <h2 class="titlebox skew-15" >{{ name }}</h2>
         </div>
     </div>
 </template>
 <script>
 module.exports = {
     components: {
-        thumb: httpVueLoader("./work-thumb.vue")
+        workstack: httpVueLoader("./work-stack.vue")
     },
     data() {
         return {};
@@ -52,11 +54,11 @@ module.exports = {
 <style scoped>
 .workDetails {
     display: grid;
-    grid-template-rows: 100px auto;
+    grid-template-rows: 10px auto;
     height: 100vh;
 }
 
-.work-thumb {
-    padding-bottom: 50px;
+.work-thumb:first-of-type {
+    padding-top: 200px;
 }
 </style>

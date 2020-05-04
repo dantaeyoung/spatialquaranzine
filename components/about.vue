@@ -1,13 +1,13 @@
 <template>
     <section>
-        <h1>About Spatial Quaranzine</h1>
+        <h1 class="skew-15 titlebox">About Spatial Quaranzine</h1>
         <plan-text-box :negative="true"> Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our
             present moment and near future, using spatial and architectural representations.
 
             Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in
             Spring 2020 by
             Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.</plan-text-box>
-        <h1>About ADR2</h1>
+        <h1 class="skew-n15 titlebox">About ADR2</h1>
         <section class="about-adr2">
             <plan-text-box> As architects, drawing and representation is one of our primary mediums. We draw futures that don't exist, spaces that haven't been changed yet. We draw and visualize and represent and render new possibilities, new futures, new kinds of spaces, new imaginations. The tools we use to design, architecture, shape our understanding of what architecture is. Drawing and representation are not just ways of putting our thoughts into the world. They are also ways of shaping our thoughts and our beliefs, and in turn, what we decide to design and in turn, what architecture we believe should be designed.</plan-text-box>
             <plan-text-box :negative="true">What is the role of architectural drawing and representation in relation to our built environment? What are the tools that are used to draw and represent? How have they and will they shape the way we draw and design architecture? How can we find ways of drawing that can enable us to be thoughtful and exploratory designers?</plan-text-box>
