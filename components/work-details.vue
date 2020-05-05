@@ -32,8 +32,7 @@
         </div>
         <div class="footer">
             <div>
-                <div id="nav_arrows"
-                     class="skew-n15">
+                <div class="skew-n15 nav-arrows">
                     <div id="left_arrow"
                          class="nav-arrow nav-border"
                          @click="goToWork(-1)">&lt;</div>
@@ -184,7 +183,7 @@ module.exports = {
     height: 100vh;
 }
 
-#nav_arrows {
+.nav-arrows {
     max-width: 600px;
     min-width: 400px;
 }

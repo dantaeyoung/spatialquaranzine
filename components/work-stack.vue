@@ -151,9 +151,9 @@ module.exports = {
 .work-desc {
     background: white;
     border: 3px solid black;
-    height: 200px;
     left: 500px;
     margin-top: 200px;
+    max-height: 200px;
     overflow-y: scroll;
     padding: 10px;
     position: absolute;

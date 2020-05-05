@@ -105,7 +105,7 @@ export const store = new Vuex.Store({
             xhr2.onload = function () {
                 context.commit(
                     "setStudents",
-                    JSON.parse(xhr2.responseText).records
+                    JSON.parse(xhr2.responseText).records.filter(s => s.fields['Work'])
                 );
             };
             xhr2.send();
