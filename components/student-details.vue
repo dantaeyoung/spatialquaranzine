@@ -81,6 +81,11 @@ module.exports = {
     padding-top: 100px;
 }
 
+.header h2 {
+    text-align: center;
+    width: 300px;
+}
+
 .nav-arrows {
     margin-top: 80px;
 }

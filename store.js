@@ -101,16 +101,17 @@ export const store = new Vuex.Store({
             xhr.onload = function () {
                 context.commit(
                     "setWorks",
-                    JSON.parse(xhr.responseText).records
+                    shuffle(JSON.parse(xhr.responseText).records)
                 );
             };
             xhr.send();
             var xhr2 = new XMLHttpRequest();
             xhr2.open("GET", studentsApiUrl);
             xhr2.onload = function () {
+                const students = shuffle(JSON.parse(xhr2.responseText).records.filter(s => s.fields['Work']))
                 context.commit(
                     "setStudents",
-                    JSON.parse(xhr2.responseText).records.filter(s => s.fields['Work'])
+                    students
                 );
             };
             xhr2.send();
