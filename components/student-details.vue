@@ -77,6 +77,10 @@ module.exports = {
 };
 </script>
 <style scoped>
+.header {
+    padding-top: 100px;
+}
+
 .nav-arrows {
     margin-top: 80px;
 }
