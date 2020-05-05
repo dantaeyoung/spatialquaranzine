@@ -17,6 +17,13 @@
                         allow="autoplay; fullscreen"
                         allowfullscreen></iframe>
             </div>
+             <div v-else-if="insta"
+                 class="imageWrapper">
+                <iframe :src="otherUrl"
+                        :style="{width: '400px'}"
+                        height="640"
+                        frameborder="0"></iframe>
+            </div>
             <div v-else-if="otherUrl"
                  class="imageWrapper">
                 <iframe :src="otherUrl"
@@ -104,6 +111,9 @@ module.exports = {
                 this.work["Images (PNG, JPG, GIF)"].length &&
                 this.work["Images (PNG, JPG, GIF)"].map(i => i.url)
             );
+        },
+        insta() {
+            return this.work && this.work["Public URL / Video"] && this.work["Public URL / Video"].includes("insta")
         },
         youtube() {
             if (this.work && this.work["Public URL / Video"]) {
