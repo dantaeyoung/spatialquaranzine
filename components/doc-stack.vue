@@ -136,6 +136,7 @@ module.exports = {
 .work-thumb {
     cursor: pointer;
     margin-bottom: 20px;
+    margin-right: 150px;
     padding-bottom: 50px;
     transition: all 300ms;
 }
