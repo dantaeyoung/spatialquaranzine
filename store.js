@@ -3,6 +3,7 @@ const apikey = "keyoQpvlH7D3w9kIB"; //normally this should NEVER be exposed. How
 const tableview = "Grid%20view";
 const workApiUrl = `https://api.airtable.com/v0/${tableID}/Work?api_key=${apikey}&view=${tableview}`;
 const studentsApiUrl = `https://api.airtable.com/v0/${tableID}/Students?api_key=${apikey}&view=${tableview}`;
+const documentsApiUrl = `https://api.airtable.com/v0/${tableID}/Documents?api_key=${apikey}&view=${tableview}`;
 
  
  // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -29,6 +30,7 @@ export const store = new Vuex.Store({
     state: {
         students: [],
         works: [],
+        documents: {},
         workThemes: [],
         hasLoaded: false,
         shuffleIndex: 0,
@@ -49,6 +51,9 @@ export const store = new Vuex.Store({
                 i++;
             });
             state.workThemes = themes;
+        },
+        setDocuments(state, documents) {
+            state.documents = documents
         },
         updateThemes(state) {
             const themes = [];
@@ -109,6 +114,19 @@ export const store = new Vuex.Store({
                 );
             };
             xhr2.send();
+            var xhr3 = new XMLHttpRequest();
+            xhr3.open("GET", documentsApiUrl);
+            xhr3.onload = function () {
+                const rawDocs = JSON.parse(xhr3.responseText).records
+                const docs = {}
+                rawDocs.forEach(doc => {
+                    docs[doc.fields['Name']] = doc.fields
+                })
+                context.commit(
+                    "setDocuments",docs
+                );
+            };
+            xhr3.send();
             context.commit('setLoaded')
         }
     }

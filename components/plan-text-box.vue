@@ -1,5 +1,5 @@
 <template>
-    <div class="nav-description"
+    <div class="about-text-box"
          @mouseover="hovered = true"
          @mouseleave="hovered = false"
          :class="{unskew: hovered, 'skew-15': !negative, 'skew-n15': negative}">

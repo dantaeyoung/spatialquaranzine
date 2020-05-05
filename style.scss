@@ -15,6 +15,10 @@ body {
 
 }
 
+a {
+  text-decoration: none;
+}
+
 .fullscreen-preview {
   background: rgba(255,255,255,0.9);
   display: flex;
@@ -38,6 +42,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  padding-top: 300px;
 }
 
 h1 {
@@ -120,10 +125,25 @@ div {
 }
 
 a.icon-button {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  text-transform: uppercase;
   transition: all 500ms;
+
+  span {
+    color: black;
+    opacity: 0;
+    transition: all 500ms;
+  }
 
   &:hover {
     transform: translate(0px,-4px);
+
+    span {
+      opacity: 1;
+    }
   }
 }
 
@@ -138,11 +158,30 @@ a.icon-button {
   }
 }
 
+.about-text-box {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  position: relative;
+  width: 300px;
+
+  .img {
+      position: absolute;  z-index: -1;
+      }
+
+  .text {
+    font-size: 0.85em;
+    padding: 30px;
+ }
+}
+
 .nav-description {
   display: flex;
   flex-direction: column;
   height: 300px;
   justify-content: center;
+  padding-top: 20px;
   position: relative;
   width: 300px;
 
@@ -162,6 +201,7 @@ a.icon-button {
   #current_info {
     flex-grow: 1;
     text-align: center;
+    width: 500px;
   }
 
   & > div {

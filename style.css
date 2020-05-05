@@ -14,6 +14,10 @@ body {
       grid-template-columns: minmax(20vw, 400px) auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 .fullscreen-preview {
   background: rgba(255, 255, 255, 0.9);
   display: -webkit-box;
@@ -46,6 +50,7 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   overflow-y: scroll;
+  padding-top: 300px;
 }
 
 h1 {
@@ -135,6 +140,25 @@ div {
 }
 
 a.icon-button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  -webkit-transition: all 500ms;
+  transition: all 500ms;
+}
+
+a.icon-button span {
+  color: black;
+  opacity: 0;
   -webkit-transition: all 500ms;
   transition: all 500ms;
 }
@@ -142,6 +166,10 @@ a.icon-button {
 a.icon-button:hover {
   -webkit-transform: translate(0px, -4px);
           transform: translate(0px, -4px);
+}
+
+a.icon-button:hover span {
+  opacity: 1;
 }
 
 .icons {
@@ -159,6 +187,32 @@ a.icon-button:hover {
   width: 100px;
 }
 
+.about-text-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 300px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  width: 300px;
+}
+
+.about-text-box .img {
+  position: absolute;
+  z-index: -1;
+}
+
+.about-text-box .text {
+  font-size: 0.85em;
+  padding: 30px;
+}
+
 .nav-description {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -171,6 +225,7 @@ a.icon-button:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  padding-top: 20px;
   position: relative;
   width: 300px;
 }
@@ -196,6 +251,7 @@ a.icon-button:hover {
       -ms-flex-positive: 1;
           flex-grow: 1;
   text-align: center;
+  width: 500px;
 }
 
 .nav-arrows > div {

@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="footer">
-            <div>
+            <div style="transform: translate(0px, 100px);">
                 <div class="skew-n15 nav-arrows">
                     <div id="left_arrow"
                          class="nav-arrow nav-border"
@@ -51,25 +51,20 @@
                          @click="goToWork(1)">&gt;</div>
                 </div>
             </div>
-            <div style="transform: translate(0px, -100px);">
+            <div style="transform: translate(0px, 50px);">
                 <plan-text-box v-if="work"
                                :class="{hide: !work['Description']}">
                     {{work && work['Description']}}</plan-text-box>
             </div>
         </div>
-        <div
-             class="fullscreen-preview"
-             @click="clickedImage = null"
-             :class="{visible: clickedImage}">
-            <img :src="clickedImage"
-                 alt="">
-        </div>
+        <fullscreen-preview v-model="clickedImage" />
     </div>
 </template>
 <script>
 module.exports = {
     components: {
-        planTextBox: httpVueLoader("components/plan-text-box.vue")
+        planTextBox: httpVueLoader("components/plan-text-box.vue"),
+        fullscreenPreview: httpVueLoader("components/fullscreen-preview.vue")
     },
     data() {
         return {
@@ -190,7 +185,7 @@ module.exports = {
 
 .work-details {
     display: grid;
-    grid-template-rows: 80% 20%;
+    grid-template-rows: 10px auto;
     height: 100vh;
 }
 
@@ -217,10 +212,11 @@ img {
 
 .footer {
     display: flex;
+    grid-row: 1;
 }
 
 .visible {
     opacity: 1;
-     pointer-events: all;
+    pointer-events: all;
 }
 </style>

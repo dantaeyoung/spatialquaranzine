@@ -24,20 +24,22 @@
                 </router-link>
             </div>
             <div v-show="!aboutView" class="nav-description skewhover skew-15">
-                <img class="img" src="/assets/images/textbox.svg" />
-                <div class="text">
-                    Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our
-                    present moment and near future, using spatial and architectural representations.
-
-                    Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in
-                    Spring 2020 by
-                    Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
-                </div>
+                <router-link to="/">
+                    <img class="img" src="/assets/images/textbox.svg" />
+                    <div class="text" style="color: black; text-decoration: none;">
+                        Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our
+                        present moment and near future, using spatial and architectural representations.
+                        
+                        Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in
+                        Spring 2020 by
+                        Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
+                    </div>
+                </router-link>
             </div>
             <div class="icons">
-                <router-link class="icon-button" to="/list"><img src="./assets/images/mode_list.svg" /></router-link>
-                <router-link class="icon-button" to="/matrix"><img src="./assets/images/mode_matrix.svg" /></router-link>
-                <a href="#" class="icon-button" @click="randomize"><img src="./assets/images/Randomize.svg" /></a>
+                <router-link class="icon-button" to="/list"><img src="./assets/images/mode_list.svg" /><span>List</span></router-link>
+                <router-link class="icon-button" to="/matrix"><img src="./assets/images/mode_matrix.svg" /><span>Matrix</span></router-link>
+                <a href="#" class="icon-button" @click="randomize"><img src="./assets/images/Randomize.svg" /><span>Shuffle</span></a>
             </div>
             <thumb-gallery />
 

@@ -91,8 +91,4 @@ module.exports = {
     grid-template-rows: 10px auto;
     height: 100vh;
 }
-
-.work-thumb:first-of-type {
-    padding-top: 200px;
-}
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div @click="goToWork"
+    <div @click="openDoc"
          class="work-thumb skew-n15">
         <div class="stack"
              :class="{'hover': hovered}"
@@ -17,8 +17,10 @@
                      :style="offset(otherImages && otherImages.length)"
                      :src="smallThumb" />
             </div>
-            <div v-if="work && work.fields && work.fields['Description']" class="work-desc">{{work.fields['Description']}}</div>
-           <h2 v-if="work && work.fields && work.fields['Title']" class="titlebox work-title" >{{ work.fields['Title'] }}</h2>
+            <div v-if="document && document['Description']"
+                 class="work-desc">{{document['Description']}}</div>
+            <h2 v-if="document&& document['Name']"
+                class="titlebox work-title">{{ document['Name'] }}</h2>
         </div>
 
     </div>
@@ -27,21 +29,20 @@
 module.exports = {
     data() {
         return {
-            hovered: false
+            hovered: false,
+            index: 0
         };
     },
-    props: ["work"],
+    props: ["document"],
     methods: {
+        openDoc() {
+            this.$emit("click", this.document);
+        },
         enterHover() {
             this.hovered = true;
-            this.$emit("hover", this.work);
         },
         leaveHover() {
             this.hovered = false;
-            this.$emit("hover", null);
-        },
-        goToWork() {
-            this.$router.push({ name: "work", params: { id: this.work.id } });
         },
         thumbForImage(image) {
             const smallThumb =
@@ -66,11 +67,11 @@ module.exports = {
     },
     computed: {
         firstImage() {
-            const images = this.work.fields["Images (PNG, JPG, GIF)"];
+            const images = this.document["Images"];
             return images ? images[0] : null;
         },
         otherImages() {
-            const images = this.work.fields["Images (PNG, JPG, GIF)"];
+            const images = this.document["Images"];
             if (images && images.length > 1) {
                 const otherImages = images.slice(1);
                 return otherImages.map(i => this.smallThumbForImage(i));
@@ -78,31 +79,6 @@ module.exports = {
         },
         smallThumb() {
             return this.thumbForImage(this.firstImage);
-        },
-        opacityForScroll() {
-            let scroll = this.y;
-            const startFade = 200;
-            const endFade = 100;
-            scroll = Math.min(startFade, scroll);
-            scroll = Math.max(endFade, scroll);
-            scroll = (scroll - endFade) / (startFade - endFade); //remap to 1-0
-            if (this.selectedstudent) {
-                if (
-                    this.work.fields["Students"].includes(
-                        this.selectedstudent.id
-                    )
-                ) {
-                    return 1.0;
-                } else {
-                    return 0.2 * scroll;
-                }
-            } else if (this.hovered) {
-                return 1.0;
-            } else if (this.hoveredwork) {
-                return 0.2 * scroll;
-            }
-
-            return scroll;
         }
     }
 };
