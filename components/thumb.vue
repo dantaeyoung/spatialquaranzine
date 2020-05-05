@@ -45,7 +45,7 @@ module.exports = {
             hovered: false
         };
     },
-    props: ["work", "x", "y", "scroll", "selectedstudent", "hoveredwork"],
+    props: ["work", "x", "y", "scroll", "selectedstudent", "hoveredwork", "topbuffer"],
     methods: {
         enterHover() {
             this.hovered = true;
@@ -85,7 +85,7 @@ module.exports = {
             return smallThumb;
         },
         opacityForScroll() {
-            let scroll = this.y;
+            let scroll = this.y - this.topbuffer;
             const startFade = 200;
             const endFade = 100;
             scroll = Math.min(startFade, scroll);

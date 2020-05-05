@@ -35,13 +35,11 @@
                 </div>
             </div>
             <div class="icons">
-                <router-link class="icon-button" to="/about"><img src="./assets/images/mode_list.svg" /></router-link>
+                <router-link class="icon-button" to="/list"><img src="./assets/images/mode_list.svg" /></router-link>
                 <router-link class="icon-button" to="/matrix"><img src="./assets/images/mode_matrix.svg" /></router-link>
                 <a href="#" class="icon-button" @click="randomize"><img src="./assets/images/Randomize.svg" /></a>
             </div>
-            <div id="thumbnail_container">
-                <thumb v-for="work in works" :work="work" />
-            </div>
+            <thumb-gallery />
 
         </div>
 
@@ -52,7 +50,7 @@
     </div>
 
     <script type="module">
-        const Thumb = httpVueLoader('components/work-thumb.vue')
+        const AllThumbs = httpVueLoader('components/all-thumbs.vue')
 
         import { router } from './router.js';
         import { store } from './store.js';
@@ -62,12 +60,12 @@
             router,
             store,
             components: {
-                'thumb': Thumb
+                'thumb-gallery': AllThumbs
             },
             computed: {
                 ...Vuex.mapState(['students', 'works']),
                 indexView() {
-                    return this.$route.name == 'matrix'
+                    return this.$route.name == 'matrix' || this.$route.name == 'list'
                 },
                 aboutView() {
                     return this.$route.name == 'about'

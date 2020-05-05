@@ -1,56 +1,62 @@
 <template>
-    <div class="wrapper">
-        <svg class="mainSvg"
-             xmlns="http://www.w3.org/2000/svg"
-             xmlns:xlink="http://www.w3.org/1999/xlink"
-             viewBox="0 0 1500 1200"
-             @mousewheel="scrollHandle">
-            <rect class="bounds"
-                  :width="width"
-                  :height="height"></rect>
-            <student-label class="student-label"
-                           v-for="(student, k) in studentsSorted"
-                           :key="`s-${k}`"
-                           :x="xForStudent"
-                           :y="yForStudent(k)"
-                           :student="student.fields"
-                           @mouseover="hoveredStudent = student"
-                           @mouseout="hoveredStudent = null"
-                           @click="studentClick(student)"
-                           :class="{fade: studentFade(student)}"></student-label>
-            <g v-for="(student, k) in studentsSorted"
-               :key="`st-${k}`">
-                <path v-for="({workid, path}, key) in pathsForStudent(student, k)"
-                      :class="{fade: pathFade(student, workid)}"
-                      :key="`path-${key}`"
-                      :d="path"
-                      stroke="black"
-                      fill="transparent" />
+    <div class="grid">
+        <div class="header">
+            <h1 class="skew-15 titlebox">All Work</h1>
+        </div>
+        <div class="wrapper">
+            <svg class="mainSvg"
+                 xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 viewBox="0 0 1500 1200"
+                 @mousewheel="scrollHandle">
+                <rect class="bounds"
+                      :width="width"
+                      :height="height"></rect>
+                <student-label class="student-label"
+                               v-for="(student, k) in studentsSorted"
+                               :key="`s-${k}`"
+                               :x="xForStudent"
+                               :y="yForStudent(k)"
+                               :student="student.fields"
+                               @mouseover="hoveredStudent = student"
+                               @mouseout="hoveredStudent = null"
+                               @click="studentClick(student)"
+                               :class="{fade: studentFade(student)}"></student-label>
+                <g v-for="(student, k) in studentsSorted"
+                   :key="`st-${k}`">
+                    <path v-for="({workid, path}, key) in pathsForStudent(student, k)"
+                          :class="{fade: pathFade(student, workid)}"
+                          :key="`path-${key}`"
+                          :d="path"
+                          stroke="black"
+                          fill="transparent" />
 
-            </g>
-            <thumb v-for="(work, wk) in worksSorted"
-                   :x="xPosForWork(work)"
-                   :y="yPosForWork(work)"
-                   :key="`w-${wk}`"
-                   :work="work"
-                   :scroll="scrollY"
-                   :selectedstudent="hoveredStudent"
-                   :hoveredWork="hoveredWork"
-                   @hover="workHover"></thumb>
-            <theme-header v-for="theme in themes"
-                          :theme="theme"
-                          :key="`t-${theme}`"
-                          :y="80"
-                          :x="xPosForTheme(theme)+60" />
-            <ellipse v-for="theme in themes"
-                     :key="theme"
-                     :cx="xPosForTheme(theme)+60"
-                     :cy="100"
-                     rx="3"
-                     ry="3">
+                </g>
+                <thumb v-for="(work, wk) in worksSorted"
+                       :x="xPosForWork(work)"
+                       :y="yPosForWork(work)"
+                       :key="`w-${wk}`"
+                       :work="work"
+                       :scroll="scrollY"
+                       :selectedstudent="hoveredStudent"
+                       :hoveredWork="hoveredWork"
+                       :topbuffer="topbuffer"
+                       @hover="workHover"></thumb>
+                <theme-header v-for="theme in themes"
+                              :theme="theme"
+                              :key="`t-${theme}`"
+                              :y="80+topbuffer"
+                              :x="xPosForTheme(theme)+60" />
+                <ellipse v-for="theme in themes"
+                         :key="theme"
+                         :cx="xPosForTheme(theme)+60"
+                         :cy="100 + topbuffer"
+                         rx="3"
+                         ry="3">
 
-            </ellipse>
-        </svg>
+                </ellipse>
+            </svg>
+        </div>
     </div>
 </template>
 
@@ -58,6 +64,7 @@
 module.exports = {
     data() {
         return {
+            topbuffer: 160,
             width: 1500,
             height: 1200,
             studentSpacing: 25,
@@ -107,7 +114,7 @@ module.exports = {
             return this.xPosForTheme(theme) + 60;
         },
         yPosForWork(work) {
-            const offset = 200;
+            const offset = 200 + this.topbuffer;
             const vSpacing = this.workSpacing;
             const vIndex =
                 (this.yPositionsForWork && this.yPositionsForWork[work.id]) ||
@@ -170,7 +177,7 @@ module.exports = {
         },
         yForStudent(i) {
             return (
-                200 +
+                200 + this.topbuffer +
                 i * this.studentSpacing -
                 this.scrollY * this.studentScrollMultiplier
             );
@@ -231,8 +238,10 @@ module.exports = {
                 // add this student to the sorted list
                 studentsOrdered.push(student);
                 // get this student's works
-                const worksForStudent = worksToSort.filter(w =>
-                    w.fields["Students"] && w.fields["Students"].includes(student.id)
+                const worksForStudent = worksToSort.filter(
+                    w =>
+                        w.fields["Students"] &&
+                        w.fields["Students"].includes(student.id)
                 );
                 // process this student's works
                 worksForStudent.forEach(processWork);
@@ -331,9 +340,9 @@ path.fade {
 
 .bounds {
     fill: none;
-    stroke: black;
+    /* stroke: black;
     stroke-dasharray: 5, 5;
-    stroke-width: 1px;
+    stroke-width: 1px; */
 }
 
 .wrapper {
@@ -346,5 +355,21 @@ path.fade {
     height: 100%;
     position: absolute;
     width: 100%;
+}
+
+.titlebox {
+    position: absolute;
+    right: 40px;
+}
+
+.header {
+    grid-row: 0;
+    
+}
+
+.grid {
+    display: grid;
+    grid-template-rows: 10px auto;
+    height: 100vh;
 }
 </style>
