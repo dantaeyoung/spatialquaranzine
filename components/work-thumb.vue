@@ -1,6 +1,10 @@
 <template>
-    <div class="thumbnail skewhover skew-n15" @click="goToWork">
-        <img class="image" :src="smallThumb" />
+    <div class="thumbnail skewhover skew-n15"
+         @mouseenter="enterHover"
+         @mouseleave="leaveHover"
+         @click="goToWork">
+        <img class="image"
+             :src="smallThumb" />
         <div class="work_names">{{ work.fields['Names'] }}</div>
         <div class="work_title">{{ work.fields['Title'] }}</div>
         <div class="work_url">{{ work.fields['Url'] }}</div>

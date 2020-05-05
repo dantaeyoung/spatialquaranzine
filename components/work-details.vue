@@ -27,7 +27,8 @@
             <div v-for="(image, key) in images"
                  :key="key"
                  class="imageWrapper">
-                <img :src="image" />
+                <img :src="image"
+                     @click="clickedImage = image" />
             </div>
         </div>
         <div class="footer">
@@ -51,9 +52,17 @@
                 </div>
             </div>
             <div style="transform: translate(0px, -100px);">
-                <plan-text-box v-if="work" :class="{hide: !work['Description']}">
+                <plan-text-box v-if="work"
+                               :class="{hide: !work['Description']}">
                     {{work && work['Description']}}</plan-text-box>
             </div>
+        </div>
+        <div
+             class="fullscreen-preview"
+             @click="clickedImage = null"
+             :class="{visible: clickedImage}">
+            <img :src="clickedImage"
+                 alt="">
         </div>
     </div>
 </template>
@@ -63,7 +72,9 @@ module.exports = {
         planTextBox: httpVueLoader("components/plan-text-box.vue")
     },
     data() {
-        return {};
+        return {
+            clickedImage: null
+        };
     },
     computed: {
         work() {
@@ -206,5 +217,10 @@ img {
 
 .footer {
     display: flex;
+}
+
+.visible {
+    opacity: 1;
+     pointer-events: all;
 }
 </style>
