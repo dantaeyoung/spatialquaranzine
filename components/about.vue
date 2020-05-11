@@ -15,7 +15,9 @@
 
                 Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in
                 Spring 2020 by
-                Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.</plan-text-box>
+                Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
+                <br /><br />
+                <em>Site Development by <a href="http://www.andrewheumann.com">Andrew Heumann</a> and <a href="https://dantaeyoung.com/">Dan Taeyoung.</a></em></plan-text-box>
             <doc-stack v-if="documents['Quaranzine Assignment']"
                        :document="documents['Quaranzine Assignment']"
                        @click="clickedDocument = $event" />
