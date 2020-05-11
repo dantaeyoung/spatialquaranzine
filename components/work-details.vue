@@ -99,7 +99,7 @@ module.exports = {
             return this.work && this.work["Title"];
         },
         students() {
-            return this.$store.state.students;
+            return this.$store.getters.studentsWithWork;
         },
         works() {
             return this.$store.state.works;

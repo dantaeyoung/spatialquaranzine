@@ -42,7 +42,7 @@ module.exports = {
             return this.student && this.student["Name"];
         },
         students() {
-            return this.$store.state.students;
+            return this.$store.getters.studentsWithWork;
         },
         works() {
             return this.$store.state.works;

@@ -160,20 +160,32 @@ module.exports = {
         workHover(work) {
             this.hoveredWork = work;
         },
+        workForId(workid) {
+            const matching = this.works.filter(w => w.id == workid)
+            if(matching.length) {
+                return matching[0]
+            } else {
+                return null
+            }
+        },
         pathsForStudent(student, k) {
             const xForStudent = this.xForStudent + 5;
             const yForStudent = this.yForStudent(k);
             const x2 = xForStudent + 100;
-            return student.fields["Work"].map(workid => {
-                const work = this.worksSorted.filter(w => w.id == workid)[0];
+            const paths = [] 
+            student.fields["Work"].forEach(workid => {
+                
+                const work = this.workForId(workid);
+                if(!work) return;
                 const xForWork = this.xPosForWork(work);
                 const yForWork = this.yPosForWork(work);
                 const x3 = xForWork - 100;
-                return {
+                paths.push({
                     workid: workid,
                     path: `M ${xForStudent} ${yForStudent} C ${x2} ${yForStudent}, ${x3} ${yForWork}, ${xForWork} ${yForWork}`
-                };
+                });
             });
+            return paths;
         },
         yForStudent(i) {
             return (
@@ -257,7 +269,7 @@ module.exports = {
     },
     computed: {
         students() {
-            return this.$store.state.students;
+            return this.$store.getters.studentsWithWork;
         },
         works() {
             return this.$store.state.works;

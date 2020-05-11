@@ -35,6 +35,17 @@ export const store = new Vuex.Store({
         hasLoaded: false,
         shuffleIndex: 0,
     },
+    getters: {
+        studentsWithWork: state => {
+            const workIds = state.works.map(w => w.id)
+            const students = state.students
+            return students.filter(s => {
+                const studentWorks = s.fields['Work']
+                const worksForStudent = studentWorks.filter(w => workIds.includes(w))
+                return worksForStudent.length > 0
+            })
+        }
+    },
     mutations: {
         setStudents(state, students) {
             state.students = students;
@@ -99,9 +110,10 @@ export const store = new Vuex.Store({
             var xhr = new XMLHttpRequest();
             xhr.open("GET", workApiUrl);
             xhr.onload = function () {
+                let works = JSON.parse(xhr.responseText).records.filter(w => !w.fields['Please don\'t share'])
                 context.commit(
                     "setWorks",
-                    shuffle(JSON.parse(xhr.responseText).records)
+                    shuffle(works)
                 );
             };
             xhr.send();
