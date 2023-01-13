@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/vuex"></script>
+    <script src="https://unpkg.com/vue@2.7.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex@2.5.0/dist/vuex.js"></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
-    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/vue-router@3.6.5/dist/vue-router.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <title>Spatial Quaranzine</title>
@@ -29,19 +29,24 @@
                     <div class="text" style="color: black; text-decoration: none;">
                         Spatial Quaranzine is an ongoing online publication / zine by Columbia GSAPP students about our
                         present moment and near future, using spatial and architectural representations.
-                        
-                        Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class taught in
+
+                        Spatial Quaranzine was made as part of Architectural Drawing and Representation 2, a class
+                        taught in
                         Spring 2020 by
                         Dan Taeyoung, Andrew Heumann, Lexi Tsien-Shiang, Quentin Yiu, and Violet Whitney.
                         <br /><br />
-                        <em>Site Development by <a href="http://www.andrewheumann.com">Andrew Heumann</a> and <a href="https://dantaeyoung.com/">Dan Taeyoung.</a></em>
+                        <em>Site Development by <a href="http://www.andrewheumann.com">Andrew Heumann</a> and <a
+                                href="https://dantaeyoung.com/">Dan Taeyoung.</a></em>
                     </div>
                 </router-link>
             </div>
             <div class="icons">
-                <router-link class="icon-button" to="/list"><img src="./assets/images/mode_list.svg" /><span>List</span></router-link>
-                <router-link class="icon-button" to="/matrix"><img src="./assets/images/mode_matrix.svg" /><span>Matrix</span></router-link>
-                <a href="#" class="icon-button" @click="randomize"><img src="./assets/images/Randomize.svg" /><span>Shuffle</span></a>
+                <router-link class="icon-button" to="/list"><img
+                        src="./assets/images/mode_list.svg" /><span>List</span></router-link>
+                <router-link class="icon-button" to="/matrix"><img
+                        src="./assets/images/mode_matrix.svg" /><span>Matrix</span></router-link>
+                <a href="#" class="icon-button" @click="randomize"><img
+                        src="./assets/images/Randomize.svg" /><span>Shuffle</span></a>
             </div>
             <thumb-gallery />
 
@@ -68,19 +73,19 @@
             },
             computed: {
                 ...Vuex.mapState(['students', 'works']),
-                indexView() {
+                indexView () {
                     return this.$route.name == 'matrix' || this.$route.name == 'list'
                 },
-                aboutView() {
+                aboutView () {
                     return this.$route.name == 'about'
                 }
             },
-            created() {
+            created () {
                 this.$store.dispatch('fetch');
                 this.$store.dispatch('shuffle');
             },
             methods: {
-                randomize() {
+                randomize () {
                     this.$store.dispatch('shuffle')
                 }
             }
