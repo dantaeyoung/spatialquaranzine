@@ -107,30 +107,46 @@ export const store = new Vuex.Store({
             }
         },
         fetchStudentsAndWorks(context) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", workApiUrl);
-            xhr.onload = function () {
-                let works = JSON.parse(xhr.responseText).records.filter(w => !w.fields['Please don\'t share'])
+
+            // this used to use workApiUrl
+            fetch('assets/data/sq_work.json')
+              .then(response => response.json())
+              .then(data => {
+
+                let works = data.records.filter(w => !w.fields['Please don\'t share'])
                 context.commit(
                     "setWorks",
                     shuffle(works)
                 );
-            };
-            xhr.send();
-            var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", studentsApiUrl);
-            xhr2.onload = function () {
-                const students = shuffle(JSON.parse(xhr2.responseText).records.filter(s => s.fields['Work']))
+
+              })
+              .catch(error => {
+                console.error('Error loading JSON file', error);
+              });
+
+            // this used to use studentsApiUrl
+            fetch('assets/data/sq_students.json')
+              .then(response => response.json())
+              .then(data => {
+                
+                const students = shuffle(data.records.filter(s => s.fields['Work']))
                 context.commit(
                     "setStudents",
                     students
                 );
-            };
-            xhr2.send();
-            var xhr3 = new XMLHttpRequest();
-            xhr3.open("GET", documentsApiUrl);
-            xhr3.onload = function () {
-                const rawDocs = JSON.parse(xhr3.responseText).records
+
+              })
+              .catch(error => {
+                console.error('Error loading JSON file', error);
+              });
+
+
+            // this used to use documentsApiUrl
+            fetch('assets/data/sq_documents.json')
+              .then(response => response.json())
+              .then(data => {
+
+                const rawDocs = data.records
                 const docs = {}
                 rawDocs.forEach(doc => {
                     docs[doc.fields['Name']] = doc.fields
@@ -138,8 +154,14 @@ export const store = new Vuex.Store({
                 context.commit(
                     "setDocuments",docs
                 );
-            };
-            xhr3.send();
+
+              })
+              .catch(error => {
+                console.error('Error loading JSON file', error);
+              });
+
+
+
             context.commit('setLoaded')
         }
     }
